@@ -1,0 +1,1295 @@
+非商业使用许可证 v5.4
+Non‑Commercial Use License v5.4
+
+生效日期 / Effective Date: 2026 年 7 月 24 日 / July 24, 2026
+
+版权所有 © 2026 WT‑XDWI（下称“许可人”）
+Copyright © 2026 WT‑XDWI (hereinafter “Licensor”)
+
+
+═══════════════════════════════════════════════════════════════════
+                          中文版本
+═══════════════════════════════════════════════════════════════════
+
+
+【特别提示】
+本许可证是一份具有法律约束力的合同。请您在下载、安装、复制、使用或以其他方式接触本软件前，仔细阅读本许可证的全部条款，特别是以粗体或下划线标识的条款，这些条款可能免除或限制许可人的责任，或限制您的权利。您有权通过 GitHub 联系许可人对本许可证进行咨询。如您对本许可证有任何疑问，建议在充分理解并接受全部条款后再使用本软件。
+
+使用本软件即表示您已阅读、理解并接受本许可证的全部条款。如您不同意任何条款，请勿使用本软件。
+
+
+第 1 章：定义与解释
+
+1.1 “本软件”是指许可人提供的所有内容，包括但不限于：
+    (a) 可执行文件和源代码；
+    (b) 库、模块、插件、扩展、驱动程序；
+    (c) 文档、教程、注释、示例代码；
+    (d) 配置文件、数据结构、数据库模式；
+    (e) 设计图、原型、用户界面布局；
+    (f) 图像、图标、音效、字体、视频素材；
+    (g) API 定义、接口规范、网络协议；
+    (h) 任何后续版本、补丁、更新、升级、增强或修正；
+    (i) 测试用例、测试数据、性能基准；
+    (j) 关联的脚本、构建工具、部署配置。
+
+1.2 “商业目的”是指以营利为直接目的，将本软件或其衍生作品用于任何直接产生货币收入或商业利润的活动，包括但不限于：
+    (a) 出售、出租、租赁、许可、质押、转让本软件或其衍生作品并收取费用；
+    (b) 将本软件或其衍生作品作为产品或服务的核心部分，向客户收取费用；
+    (c) 将本软件嵌入到任何以营利为目的向第三方销售的产品或服务中；
+    (d) 利用本软件提供收费的技术支持、咨询、培训、实施、维护或托管服务；
+    (e) 开发基于本软件的商业应用程序并对外销售或许可；
+    (f) 通过本软件获取付费订阅或会员收入。
+
+为免疑义，以下活动不构成商业目的：
+    (i) 企业内部的技术研究、概念验证、性能测试、安全评估，即使该等活动间接为企业带来长期利益；
+    (ii) 学术研究、教育演示、非营利组织活动、开源项目开发；
+    (iii) 个人学习、兴趣开发、作品展示。
+
+本许可证中“商业目的”的判断应以使用行为本身的性质为准，而非以使用主体的性质为准。凡无法直接归入上述商业目的示例的使用，均应推定为非商业目的，除非许可人能够提供充分证据证明该使用以营利为直接目的。
+
+1.3 “非商业目的”是指除商业目的外的一切使用方式，包括但不限于：
+    (a) 个人学习、学术研究、技术实验、兴趣开发；
+    (b) 教育机构的教学活动、实验室练习；
+    (c) 科研单位的学术研究、论文发表；
+    (d) 非营利组织的公益活动、社会服务；
+    (e) 政府机构或公共部门的非营利性公共服务；
+    (f) 开源项目的开发、完善和维护（须遵守本许可证）；
+    (g) 个人作品展示、开源社区贡献；
+    (h) 内部测试、评估和性能分析（不得用于商业获益）；
+    (i) 代码竞赛、黑客松活动（不涉及商业奖励）；
+    (j) 个人博客或技术文章中的代码示例；
+    (k) 公共图书馆或社区中心的公益服务。
+
+1.4 “衍生作品”是指基于本软件或其任何部分，通过修改、翻译、改编、扩展、重构、组合或其他方式创作的新作品，其中包含本软件的核心功能或代码。
+
+1.5 “分发”是指以任何形式向第三方提供本软件或衍生作品，包括但不限于：
+    (a) 通过网络下载、共享、复制、镜像；
+    (b) 通过物理介质（CD、U盘、硬盘）交付；
+    (c) 通过电子邮件、即时通讯发送；
+    (d) 通过云存储、代码托管平台发布；
+    (e) 通过预安装、嵌入式设备提供；
+    (f) 通过 API 或网络服务暴露（SaaS 模式）。
+
+1.6 “修改”是指对本软件进行任何变更，包括但不限于添加、删除、重组、优化、缺陷修复、功能增强、性能调整、界面更改等。
+
+1.7 “源代码”是指人类可读的原始程序代码，便于理解、修改和编译。
+
+1.8 “目标代码”是指经过编译、汇编或解释后生成的机器执行码。
+
+1.9 “许可人”是指 WT‑XDWI 及其法定继承人或受让人。
+
+1.10 “被许可人”是指任何合法使用本软件并受本许可证约束的个人或实体。
+
+1.11 “商业授权”是指许可人另行授予的、允许被许可人将本软件用于商业目的的书面许可。
+
+1.12 “贡献者”是指向本软件提交修改、补丁、增强或建议的个人或组织，无论是否署名。
+
+1.13 “反馈”是指被许可人向许可人提供的关于本软件的错误报告、改进建议、评价或其他信息。
+
+1.14 “保密信息”是指本软件中包含的未公开的算法、设计、思路、策略、数据、测试结果等。
+
+1.15 “不可抗力”是指无法预见、无法避免且无法克服的客观情况，包括但不限于自然灾害（地震、洪水、火灾）、战争、恐怖袭击、罢工、政府行为、网络攻击、电力中断、通信故障等。
+
+1.16 “审计”是指许可人对被许可人使用本软件的情况进行合规性检查的行为。
+
+
+第 2 章：授权范围
+
+2.1 许可人授予被许可人一项全球性、非独占、不可转让、不可分许可、免版权费（royalty‑free）的许可，允许被许可人在遵守本许可证全部条款的前提下，为非商业目的使用、复制、修改、合并、出版、分发本软件及其衍生作品。
+
+2.2 本授权同时适用于源代码和目标代码形式，无论以何种形式存在，均受本许可证保护。
+
+2.3 被许可人可以将本软件嵌入到自身项目中，但整个项目的性质必须为非商业，且不得规避本许可证的限制。
+
+2.4 本授权不授予被许可人任何商标权、专利权、外观设计权或其他知识产权，但明确允许为修改和分发目的而合理使用许可人的名称（仅限于必需的功能性标识，如“本软件基于 WT‑XDWI 的m4a2mp3 项目修改”）。
+
+2.5 许可人保留随时更新本软件（包括补丁、更新、升级）的权利，被许可人可选择是否安装更新。不安装更新不影响已授予的授权，但可能影响本软件的性能或安全性。
+
+2.6 本授权不限制被许可人使用本软件所依赖的第三方库（如有）的权利，前提是遵守第三方库自身的许可条款。
+
+2.7 被许可人有权移除或替换本软件中的任何部分，但若移除后导致无法正常使用，则由被许可人自行承担责任。
+
+2.8 本授权为个人授权，不得在组织内部共享（除非该组织整体被视为单一被许可人，且所有使用者都知晓并同意遵守本许可证）。
+
+2.9 本授权的有效期为无限期，直至被许可人违反本许可证或因其他原因被终止。
+
+2.10 被许可人可以在多个设备上安装本软件，但所有设备的使用均应遵守本许可证。
+
+
+第 3 章：使用限制与禁止行为
+
+3.1 严格禁止商业使用。被许可人不得将本软件或其衍生作品用于任何商业目的，无论该商业活动是否产生经济收益。
+
+3.2 禁止删除或隐藏版权信息。被许可人不得删除、修改、遮盖或模糊化本软件中包含的任何版权声明、商标信息、许可文本、作者归属、免责声明，包括但不限于：
+    (a) 源代码中的注释或头文件；
+    (b) 文档、README、帮助文件中的说明；
+    (c) 启动画面、关于对话框、状态栏；
+    (d) 输出信息、日志、错误提示；
+    (e) 打包文件中的元数据。
+
+3.3 禁止分许可。被许可人不得将本许可证授予的任何权利再许可给任何第三方，也不得将本软件作为服务（包括但不限于 SaaS、PaaS、DaaS）提供给外部用户，除非该服务为非商业性质。
+
+3.4 禁止反向工程。被许可人不得对本软件进行反向工程、反编译、反汇编或试图提取源代码，除非法律明确允许且无法通过其他方式获得必要的信息。
+
+3.5 禁止虚假宣传。被许可人不得声称本软件由其独立开发，也不得暗示许可人认可、赞助或关联其衍生作品。
+
+3.6 禁止商标滥用。被许可人不得使用许可人的名称、商标、标志、域名、商业符号进行任何未经授权的推广、广告、营销或商业活动。
+
+3.7 禁止恶意使用。被许可人不得利用本软件从事任何违法、侵权、破坏网络安全、传播病毒、勒索、欺诈、扰乱社会秩序的活动。
+
+3.8 禁止规避技术保护措施。被许可人不得绕过本软件中可能存在的任何技术限制，如加密、授权验证、时间锁定等。
+
+3.9 禁止利用本软件实施歧视或侵犯人权行为。
+
+3.10 禁止使用本软件进行任何形式的监视、跟踪或未经同意的数据收集。
+
+3.11 禁止将本软件用于任何军事用途或与国家安全相关的活动，除非获得许可人的特别书面授权。
+
+3.12 禁止将本软件用于核能、生化武器或其他大规模杀伤性武器相关活动。
+
+3.13 被许可人理解并同意，本许可证中“商业目的”的定义应按照中华人民共和国法律进行解释。
+
+
+第 4 章：分发与再分发条件
+
+4.1 被许可人分发本软件或衍生作品时，必须同时满足以下全部条件：
+    (a) 随同分发物附上本许可证的完整副本（或以醒目的方式指明可获取许可证的网址）；
+    (b) 保留原始版权声明、许可声明、免责声明和归属声明；
+    (c) 若进行了修改，必须清晰注明修改者姓名、修改日期、修改内容摘要，并在项目根目录下添加名为“MODIFICATIONS”或“CHANGELOG”的文件，记录所有变更；
+    (d) 若以目标代码形式分发，必须同时提供可公开访问的完整对应源代码，且源代码须保持可读性、可修改性，并同样受本许可证约束；
+    (e) 不得对分发物施加任何额外的限制或条款，不得改变本许可证的核心义务；
+    (f) 确保分发物的接收方能够方便地阅读并接受本许可证；
+    (g) 如果分发包含第三方代码，应明确标注并遵守其各自的许可条款。
+
+4.2 被许可人不得将本软件或其衍生作品集成到任何商业化分发平台（如应用商店、付费软件库、商业网站），除非该平台明确仅用于非商业用途且不对用户收取任何费用。
+
+4.3 任何分发行为都应由被许可人自行承担全部责任，包括但不限于确保分发内容合法、安全、不侵犯第三方权益。
+
+4.4 若衍生作品包含第三方的代码或资源，被许可人应确保该第三方许可与本次分发不冲突。
+
+4.5 被许可人分发本软件时，应确保不引入任何恶意代码、后门或安全漏洞。
+
+
+第 5 章：版权与知识产权
+
+5.1 本软件及其衍生作品的所有版权、商标权、专利权、商业秘密、数据库权利、设计权及其他知识产权（无论是否注册）均归许可人所有，且受到国内外相关法律的保护。
+
+5.2 被许可人仅获得本许可证明确授予的有限使用权，不获得任何所有权或知识产权的转移。
+
+5.3 许可人保留所有未明确授予的权利，包括但不限于商业授权、独家许可、转让权等。
+
+5.4 被许可人不得以任何方式挑战、质疑或攻击许可人对本软件的知识产权有效性。
+
+5.5 被许可人不得将本软件用于专利侵权诉讼或相关活动。
+
+5.6 若被许可人向本软件提交贡献（代码、文档、设计等），除非另有书面协议，视为授予许可人一项非独占的、不可撤销的、全球性的、免版税的许可，以使用、复制、修改和分发该贡献，仅用于本软件的集成和分发目的。贡献者保留其贡献的所有权及对外许可权。
+
+5.7 贡献者在提交贡献时，应确保该贡献不侵犯任何第三方的知识产权。
+
+5.8 许可人有权对贡献进行审查、修改或拒绝，最终决定权归许可人所有。
+
+
+第 6 章：无担保声明（免责声明）
+
+6.1 在适用法律允许的最大范围内，本软件按“原样”（AS IS）提供，不附带任何明示或默示的担保，包括但不限于：
+    (a) 适销性；
+    (b) 特定用途的适用性；
+    (c) 不侵犯第三方知识产权；
+    (d) 安全性、完整性、可靠性；
+    (e) 正确性、准确性、无错误；
+    (f) 与其他软件的兼容性；
+    (g) 是否满足被许可人的需求；
+    (h) 性能是否达到预期；
+    (i) 是否包含任何漏洞或缺陷。
+
+6.2 许可人不保证本软件不会受到病毒、恶意代码、后门或其他有害组件的影响。
+
+6.3 被许可人使用本软件即表示承认并接受所有风险，许可人对使用本软件产生的任何后果不承担任何责任。
+
+6.4 任何口头或书面的信息或建议均不构成担保。
+
+
+第 7 章：责任限制
+
+7.1 在适用法律允许的最大范围内，许可人不对被许可人或任何第三方因使用、修改、分发或无法使用本软件而导致的间接损失、附带损失、后果性损失承担责任，包括但不限于利润损失、数据丢失、业务中断、商誉损害、机会损失、声誉损失（统称“间接损害”）。
+
+7.2 本许可证中的任何免责或责任限制条款，均不影响因许可人故意或重大过失造成的直接损害赔偿责任。根据《中华人民共和国民法典》第五百零六条，因故意或者重大过失造成对方财产损失的免责条款无效。
+
+7.3 若某些国家或地区的法律不允许排除或限制责任，则许可人的总累计赔偿责任（若有）不应超过被许可人因本软件实际支付给许可人的费用（如有），且最高不超过壹佰美元（USD 100）。
+
+7.4 以上限制适用于任何诉讼类型，包括合同、侵权（包括过失）、严格责任或其他法律理论。
+
+7.5 被许可人行使本许可证授予的权利时，应合理且善意地使用本软件。许可人行使本许可证下的权利时，亦应合理且善意。
+
+
+第 8 章：赔偿
+
+8.1 被许可人同意，如因其违反本许可证的行为，或因使用、修改、分发本软件或其衍生作品，而导致许可人遭受任何第三方索赔、诉讼、行政调查或禁令，且该等索赔、诉讼、调查或禁令与被许可人的行为有直接因果关系，被许可人应赔偿许可人因此遭受的直接损失、费用和支出（包括但不限于合理的律师费、诉讼费、仲裁费、差旅费、和解金），并使许可人免受损害。
+
+许可人应及时通知被许可人任何索赔或诉讼，并允许被许可人参与抗辩。许可人对索赔的处理方式应合理，不得无正当理由拒绝和解。
+
+8.2 许可人有权自行选择律师并控制抗辩，被许可人应配合许可人的抗辩并提供必要协助。
+
+8.3 被许可人不得在未经许可人书面同意的情况下，自行达成任何可能影响许可人权益的和解。
+
+8.4 若被许可人未能及时赔偿许可人的损失，许可人有权从任何应付给被许可人的款项中扣除相应金额，或采取其他法律手段追讨。
+
+8.5 被许可人根据本条承担的赔偿总额，不应超过被许可人因使用本软件所获得的直接经济收益的总额（如有）。
+
+
+第 9 章：终止与恢复
+
+9.1 若被许可人违反本许可证的任何条款，本授权将立即自动终止，无需事前通知（以下简称“有理由终止”）。根据中国司法实践，开源许可证在法律属性上构成附条件解除的著作权许可协议，违反协议将导致授权终止。
+
+9.2 授权终止后，被许可人必须立即：
+    (a) 停止使用本软件；
+    (b) 删除或销毁所有在终止时仍由被许可人持有或控制的物理和电子副本（包括衍生作品）；
+    (c) 向许可人提供书面销毁证明（许可人要求时）。
+    对于本许可证终止前已分发给第三方的衍生作品，被许可人无需追溯召回或销毁，但应通知其接收方本许可证已终止，且接收方的使用应遵守本许可证的条款。
+
+9.3 许可人保留追究违约方法律责任的一切权利，包括但不限于要求赔偿、申请临时禁令、永久禁令、追讨合理费用等。
+
+9.4 若被许可人能够证明其违约系疏忽或误解，且在收到许可人书面通知后 30 个日历日内完全纠正违约行为，则许可人可（酌情）恢复其授权，但该恢复不构成对后续违约的豁免。
+
+9.5 终止后，第 5、6、7、8、10、11、12、13、14、15、16、17、18、19、20、21、22、23、24、25、26、27、28、29、30、31 条继续有效。
+
+
+第 10 章：争议解决与法律适用
+
+10.1 本许可证的效力、解释、执行及争议解决，应适用中华人民共和国法律。
+
+10.2 因本许可证或本软件产生的任何争议，双方应首先通过友好协商解决，协商期不少于 30 天。双方同意，协商可通过书面函件、电子邮件或线上会议进行。
+
+10.3 若协商未能解决争议，任何一方均可将争议提交至许可人所在地有管辖权的人民法院诉讼解决，被许可人不可撤销地同意该法院的管辖。双方确认，本条款不排除被许可人向其所在地有管辖权的人民法院提起诉讼的权利，但许可人有权提出管辖权异议并请求将案件移送至许可人所在地法院审理。
+
+10.4 在争议解决期间，双方应继续履行本许可证中不涉及争议的其他条款。
+
+
+第 11 章：出口管制与合规
+
+11.1 被许可人应遵守所有适用的出口管制、经济制裁、贸易限制法律法规，包括但不限于中国《出口管制法》《两用物项出口管制条例》《对外贸易法》及美国《出口管理条例》（EAR）、欧盟制裁条例等。
+
+11.2 被许可人不得将本软件出口、再出口或转移至任何受限制的国家、地区或实体，也不得用于任何被禁止的最终用途（包括大规模杀伤性武器扩散、军事用途、恐怖活动）。
+
+11.3 被许可人应自行获取所有必要的出口许可或政府批准，并配合许可人提供相关证明。
+
+11.4 许可人有权要求被许可人提供出口合规证明文件。
+
+
+第 12 章：数据保护与隐私
+
+12.1 若本软件涉及收集、处理、存储或传输任何个人数据或敏感数据，被许可人必须遵守所有适用的数据保护法律，包括但不限于：
+    (a) 中华人民共和国《个人信息保护法》《数据安全法》《网络安全法》；
+    (b) 欧盟《通用数据保护条例》（GDPR）；
+    (c) 美国《加州消费者隐私法案》（CCPA）等。
+
+12.2 被许可人应确保其数据处理活动具有合法基础（如用户同意、合同必要等），并采取适当的技术和组织措施保障数据安全。
+
+12.3 许可人不对被许可人的数据处理行为承担任何责任，也不对被许可人因处理数据引发的法律后果负责。
+
+12.4 被许可人应在其隐私政策中明确说明其使用本软件时的数据处理方式。
+
+
+第 13 章：不可抗力
+
+13.1 若任何一方因不可抗力事件无法履行本许可证下的义务，该方应及时通知另一方，并在合理期限内提供不可抗力事件的证明。
+
+13.2 不可抗力事件包括但不限于：
+    (a) 自然灾害（地震、洪水、台风、火山爆发、海啸、山体滑坡）；
+    (b) 人为灾害（战争、武装冲突、恐怖袭击、暴动、罢工、骚乱）；
+    (c) 政府行为（禁运、封锁、征用、法律变更、政府命令）；
+    (d) 技术故障（电力中断、通信故障、互联网瘫痪、数据中心宕机、卫星故障）；
+    (e) 公共卫生事件（流行病、大流行病、检疫隔离）；
+    (f) 其他超出双方合理控制范围的事件。
+
+13.3 因不可抗力导致的延迟或无法履行，不承担违约责任，但受影响方应尽合理努力减轻影响。
+
+13.4 不可抗力事件持续超过 60 天的，任何一方有权终止本许可证。
+
+
+第 14 章：使用期限
+
+14.1 本许可证在被许可人持续遵守全部条款的前提下无限期有效。
+
+14.2 被许可人可随时书面通知许可人终止本许可证，但终止后仍需遵守存续条款。
+
+
+第 15 章：通知方式
+
+15.1 所有正式通知应以书面形式发出，可通过以下方式送达：
+    (a) 电子邮件（发送至许可人公布的邮箱或被许可人提供的邮箱）；
+    (b) 挂号信或快递（发送至许可人公布的地址）；
+    (c) 在许可人的官方网站或 GitHub 仓库发布公告（视为送达所有被许可人）。
+
+15.2 通知送达时间为：
+    (a) 电子邮件：发送后 24 小时；
+    (b) 挂号信：投邮后 7 天；
+    (c) 公告发布：发布之日。
+
+15.3 双方应保持有效的联系信息，如有变更应及时通知对方。
+
+
+第 16 章：许可人的权利
+
+16.1 许可人有合理理由相信被许可人可能存在违反本许可证的行为时，有权要求审计被许可人对本软件的使用情况，以确保合规性。审计请求应以书面形式提出，并说明合理理由。
+
+16.2 审计可通过书面请求进行，被许可人应在收到请求后 15 个工作日内提供必要的使用数据或访问权限。同一被许可人在 12 个月内不得被审计超过一次，除非有新的合理怀疑。
+
+16.3 审计费用由许可人承担，但如果发现违规，违规方应承担全部审计费用。
+
+16.4 许可人有权要求被许可人提供其衍生作品中与验证本许可证合规性直接相关的源代码部分副本，但该等源代码的提供应仅限于验证被许可人是否遵守本许可证的条款。许可人获得的所有源代码及其他信息，均应按第 20 条的规定承担保密义务，且不得用于任何其他目的。被许可人可要求许可人签署独立的保密协议，并在提供代码前合理遮蔽与合规验证无关的商业秘密部分。
+
+16.5 许可人有权要求被许可人提供其使用本软件的详细记录，包括但不限于使用场景、分发记录、修改内容等。
+
+
+第 17 章：被许可人的义务
+
+17.1 被许可人应自行承担使用本软件所需的一切硬件、软件、网络及技术支持费用。
+
+17.2 被许可人应保留本软件的使用记录，并在必要时向许可人提供。
+
+17.3 被许可人应确保其员工、代理人、承包商均知晓并遵守本许可证。
+
+17.4 被许可人应在分发衍生作品时附上完整的修改记录，并保留原作者署名。
+
+17.5 被许可人不得利用本软件进行任何形式的歧视、仇恨言论或侵犯人权行为。
+
+17.6 被许可人应确保其使用本软件的行为符合其所在地区的所有适用法律法规。
+
+17.7 被许可人应积极配合许可人的合规性检查。
+
+
+第 18 章：反馈与贡献
+
+18.1 若被许可人向许可人提供反馈（包括但不限于错误报告、改进建议、评价），许可人有权以任何方式使用该反馈，不受任何限制。
+
+18.2 向本软件提交贡献（代码、文档、设计等）的被许可人，除非另有书面协议，视为授予许可人一项非独占的、不可撤销的、全球性的、免版税的许可，以使用、复制、修改和分发该贡献，仅用于本软件的集成和分发目的。贡献者保留其贡献的所有权及对外许可权。
+
+18.3 贡献者应确保其贡献不侵犯任何第三方的知识产权。
+
+18.4 许可人有权对贡献进行审查、修改或拒绝。
+
+
+第 19 章：第三方软件兼容性
+
+19.1 本软件可能包含或依赖第三方开源库，这些第三方库的使用将受到各自许可协议的保护，本许可证不影响这些第三方许可。
+
+19.2 被许可人应自行遵守这些第三方许可的条款。
+
+19.3 许可人不对第三方软件的任何问题承担责任。
+
+
+第 20 章：保密义务
+
+20.1 被许可人不得泄露本软件中未公开的算法、设计、性能指标、测试数据、路线图或其他保密信息。
+
+20.2 保密义务在本许可证终止后仍然有效，直至该信息进入公有领域。
+
+20.3 保密信息不包括：
+    (a) 已公开的信息；
+    (b) 被许可人独立开发的信息；
+    (c) 从第三方合法获得的信息。
+
+
+第 21 章：担保的排除
+
+21.1 除法律强制规定外，许可人不提供任何明示或默示的担保。
+
+21.2 任何口头或书面的信息或建议均不构成担保。
+
+21.3 被许可人应自行评估本软件的质量和适用性。
+
+
+第 22 章：责任上限的细化
+
+22.1 如果第 7 章的责任限制被法院判定无效，则许可人对任何单一事件的总赔偿责任上限为 50 美元。
+
+22.2 对连续事件的累积赔偿责任上限为 100 美元。
+
+22.3 以上责任上限不适用于第 7.2 条规定的故意或重大过失造成的损害。
+
+
+第 23 章：可分割性
+
+23.1 若本许可证的任何条款被认定为无效、非法或不可执行，该条款应在最小范围内修改以使其有效，其余条款仍然完全有效。
+
+
+第 24 章：语言效力
+
+24.1 若本许可证被翻译成其他语言，中文版本应具有最终法律效力（若许可人住所地在中国）；若许可人住所地不在中国，则以英文版本为准（若提供）。
+
+24.2 本许可证以中文编写，若存在歧义，应以许可证的整体目的和上下文进行合理解释。
+
+
+第 25 章：替代争议解决（调解建议）
+
+25.1 双方建议在提交诉讼或仲裁前，将争议提交至经双方同意的独立调解员进行调解。调解期为 60 天，但双方可协商缩短或延长。
+
+25.2 调解费用由双方平均承担，除非调解协议另有规定。
+
+25.3 调解过程中所有的交流内容均视为保密，不可在后续仲裁或诉讼中作为证据。
+
+
+第 26 章：电子签名效力
+
+26.1 双方确认，通过电子方式（包括但不限于点击确认、下载软件、使用软件）表示接受本许可证，具有与书面签字相同的法律效力。
+
+
+第 27 章：持续义务（存续条款）
+
+27.1 以下条款在本许可证终止后仍然有效：
+    - 第 5 条（版权与知识产权）
+    - 第 6 条（无担保声明）
+    - 第 7 条（责任限制）
+    - 第 8 条（赔偿）
+    - 第 10 条（争议解决）
+    - 第 11 条（出口管制）
+    - 第 12 条（数据保护）
+    - 第 20 条（保密义务）
+    - 第 25 条（调解建议）
+    - 第 27 条（本条款自身）
+
+
+第 28 章：完整协议
+
+28.1 本许可证构成双方之间关于本软件使用的完整且排他性协议，取代所有先前或同期的口头或书面沟通、备忘录、承诺、陈述。
+
+28.2 任何对本许可证的修改、补充或放弃均须以书面形式并由双方签署。
+
+
+第 29 章：许可证的修订
+
+29.1 许可人保留修订本许可证的权利，修订版本应提前 30 日在官方页面公布，并注明修订日期和修订内容摘要。
+
+29.2 被许可人可在修订生效前书面通知许可人拒绝接受修订，并终止本许可证。若被许可人在修订生效后继续使用本软件，视为接受修订版本。
+
+
+第 30 章：开源协议兼容性
+
+30.1 本许可证为独立的非商业使用许可证。
+
+30.2 若本软件包含或衍生自适用 GPL、AGPL、EUPL、LGPL 等开源许可证（“其他开源许可证”）的代码，且本许可证与适用开源许可证发生冲突，则应以适用开源许可证的条款为准，但仅限于该冲突部分。被许可人应同时遵守该等开源许可证的条款。
+
+30.3 本软件所依赖的第三方组件清单及其各自许可证，详见仓库根目录的 THIRD-PARTY-NOTICES.md。该等第三方组件不构成本许可证所称“软件”的一部分，其获取、使用与分发分别适用各自的许可证条款，不受本许可证第 1.2 条“商业目的”限制的约束。
+
+30.4 特别提示：本软件运行所需的 ffmpeg-core（许可证：GPL-2.0-or-later）与 lamejs（许可证：LGPL-3.0）由被许可人通过公共 CDN 单独获取，不由本仓库分发：
+    (a) 本仓库不包含上述组件的二进制文件；
+    (b) 被许可人若拟将该等组件用于商业目的，应自行向相应权利人确认并取得授权；
+    (c) 许可人不对被许可人使用该等第三方组件的行为承担任何责任。
+
+
+第 31 章：商标与名称使用
+
+31.1 被许可人不得以任何方式使用许可人的名称、商标、标志、域名、商业符号进行任何形式的推广、广告、营销或商业活动，除非获得许可人的书面授权。
+
+31.2 在遵守本许可证的前提下，被许可人可以在合理范围内使用许可人的名称进行客观描述（如“本软件基于 WT‑XDWI 的m4a2mp3 项目修改”）。
+
+
+附录 A：商业目的示例清单（非穷尽）
+
+为便于理解，以下场景明确属于商业目的：
+
+1. 将本软件嵌入到销售给客户的企业管理系统中；
+2. 使用本软件分析企业内部销售数据以优化市场策略；
+3. 将本软件作为在线教育平台的一部分并收取课程费用；
+4. 在商业展览中展示本软件以吸引投资者；
+5. 利用本软件生成分析报告后出售给第三方；
+6. 为外部客户提供基于本软件的定制开发服务并收取费用；
+7. 在本软件中植入广告获取广告收入；
+8. 利用本软件收集用户行为数据并进行商业化变现；
+9. 将本软件作为加盟商的管理工具；
+10. 使用本软件进行加密货币挖矿；
+11. 将本软件作为商业产品的一部分进行市场推广；
+12. 使用本软件为客户提供有偿的技术支持；
+13. 基于本软件开发商业软件并销售；
+14. 将本软件作为企业内部日常运营工具，用于支持主营业务的生产、管理或服务交付，而非仅用于技术研究或测试评估目的；
+15. 使用本软件进行商业合同的自动化处理；
+16. 将本软件用于金融交易系统的开发；
+17. 使用本软件进行市场调研并销售调研结果；
+18. 将本软件集成到商业硬件产品中；
+19. 使用本软件进行商业竞标项目的开发；
+20. 将本软件作为付费 API 服务提供；
+21. 利用本软件进行人工智能模型的商业训练；
+22. 将本软件用于电商平台的推荐算法开发。
+
+
+附录 B：非商业使用示例（非穷尽）
+
+以下场景明确属于非商业目的：
+
+1. 个人学生自学编程技术；
+2. 大学教授在课堂上进行教学演示；
+3. 开源社区开发者添加功能并提交 Pull Request；
+4. 非营利组织用于内部志愿者管理；
+5. 政府气象部门用于数据分析（不收费）；
+6. 个人制作游戏模组并免费发布；
+7. 研究人员发表论文时用于实验验证；
+8. 代码竞赛中作为参赛作品；
+9. 个人博客中作为技术示例；
+10. 公共图书馆提供免费访问；
+11. 学术机构的内部研究项目；
+12. 个人爱好者进行兴趣开发；
+13. 教育机构的学生项目；
+14. 非营利组织的公益活动；
+15. 政府机关的公共服务（非营利）；
+16. 开源社区的技术交流；
+17. 个人作品展示；
+18. 黑客松活动的参赛作品；
+19. 技术培训机构的免费演示；
+20. 社区中心的公益服务项目；
+21. 个人学习笔记中的代码引用；
+22. 技术书籍中的示例代码。
+
+
+附录 C：被许可人合规检查清单
+
+被许可人应定期对照以下清单进行自查：
+
+- [ ] 是否确认本软件的使用为非商业目的？
+- [ ] 是否保留了完整的版权声明和许可声明？
+- [ ] 是否未对软件进行反向工程？
+- [ ] 是否未将软件用于任何商业活动？
+- [ ] 分发时是否附带了完整许可证文本？
+- [ ] 修改时是否记录了修改内容？
+- [ ] 是否未使用许可人的商标进行推广？
+- [ ] 是否遵守了所有出口管制法律？
+- [ ] 处理个人数据时是否符合数据保护法？
+- [ ] 是否保留了使用记录以备审计？
+- [ ] 是否未将软件用于 AI/大模型训练？
+- [ ] 是否遵守了所有适用的第三方开源许可证？
+
+
+附录 D：常见问题解答（FAQ）
+
+Q1：我可以在公司内部使用本软件吗？
+A1：可以，但前提是使用方式为非商业目的（如内部技术研究、测试评估），不得用于任何商业运营或创收活动。
+
+Q2：我可以将本软件集成到我的开源项目中吗？
+A2：可以，前提是你的项目整体为非商业性质，并且你的项目也遵守本许可证的条款。
+
+Q3：我可以将本软件用于教学吗？
+A3：可以，教学属于非商业目的，但不得收取与软件直接相关的费用。
+
+Q4：我想将本软件用于商业项目，怎么办？
+A4：请通过 GitHub 或邮件联系许可人，获取商业授权。
+
+Q5：如果我发现本软件中的漏洞，可以公开披露吗？
+A5：建议先向许可人报告漏洞，待许可人修复后再公开披露，以避免安全风险。
+
+Q6：我可以修改本软件并发布我的修改版本吗？
+A6：可以，但必须遵守本许可证的分发条件，包括保留版权声明、注明修改内容、附上许可证副本等。
+
+Q7：本许可证与 MIT 许可证有什么区别？
+A7：MIT 许可证允许商业使用，而本许可证明确禁止商业使用，并要求分发时保留完整的许可声明和修改记录。
+
+Q8：我可以在网站上展示本软件吗？
+A8：可以，只要该网站不涉及商业活动（如不收费、不投放广告等）。
+
+Q9：本软件包含第三方代码，我需要遵守他们的许可吗？
+A9：是的，您必须遵守所有第三方代码的许可条款。
+
+Q10：如果我想为项目捐款，算商业使用吗？
+A10：捐赠行为本身通常不被视为商业使用，前提是：
+    (a) 捐赠与软件的使用权无关；
+    (b) 捐赠不构成购买或订阅软件的对价；
+    (c) 捐赠行为不影响软件对全体用户的公平开放。
+
+Q11：本许可证在中国法院有法律效力吗？
+A11：是的。中国法院已在多个判例中间接认可了开源许可证的法律效力。本许可证作为附条件解除的著作权许可协议，在中国法律框架下具有可执行性。
+
+Q12：我可以将本软件用于人工智能模型训练吗？
+A12：不可以。本许可证第 1.2 条明确禁止将本软件用于任何 AI、机器学习或大语言模型的训练。
+
+
+附录 E：出口管制与数据保护合规参考
+
+本附录为被许可人提供出口管制与数据保护领域的最新法规动态参考，不具有合同效力，仅为合规提示。
+
+一、出口管制领域
+
+| 序号 | 法规/文件 | 施行/更新时间 | 核心要点 |
+| :---: | :--- | :--- | :--- |
+| 1 | 《出口管制法》 | 2020年12月1日 | 确立出口管制基本制度，涵盖管制物项、管制行为、许可制度及域外管辖 |
+| 2 | 《两用物项出口管制条例》 | 2024年 | 细化管制物项的范围和管制措施 |
+| 3 | 《两用物项出口管制清单》 | 2025年10月更新 | 明确具体管制物项，被许可人需定期核查 |
+| 4 | 《对外贸易法》 | 2026年3月1日修订施行 | 新增出口管制相关制度安排 |
+| 5 | 出口报关新规 | 2026年4—6月 | 海关总署要求新增“禁限管制识别码”和“禁限管制申报要素”申报项目 |
+| 6 | 美国《出口管理条例》（EAR）及欧盟制裁条例 | — | 如被许可人位于或涉及相关法域，需同时遵守 |
+
+提示：被许可人应定期查阅商务部（www.mofcom.gov.cn）和海关总署（www.customs.gov.cn）发布的最新公告。
+
+二、数据保护领域
+
+| 序号 | 法规/标准 | 施行/发布时间 | 核心要点 |
+| :---: | :--- | :--- | :--- |
+| 1 | 《个人信息保护法》 | 2021年11月1日 | 确立个人信息处理规则，规范自动化决策与跨境传输 |
+| 2 | 《数据安全法》 | 2021年9月1日 | 建立数据分类分级保护制度，规定重要数据处理者的安全保护义务 |
+| 3 | 《网络安全法》 | 2017年6月1日 | 要求网络运营者履行网络安全保护义务 |
+| 4 | GB/T 46068-2025 | 2026年3月1日实施 | 个人信息出境认证的技术标准依据 |
+| 5 | 《个人信息出境认证办法》 | 2025年10月发布 | 完善个人信息出境认证机制 |
+| 6 | 《促进和规范数据跨境流动规定》 | — | 明确免予申报的情形 |
+
+个人信息出境三条合规路径：
+1. 申报数据出境安全评估
+2. 订立个人信息出境标准合同
+3. 通过个人信息保护认证
+
+提示：被许可人处理个人信息时应确保具有合法基础，并采取适当技术措施保障数据安全。上述国家标准虽不具有法律强制力，但可作为合规的最佳实践参考。
+
+
+最终条款
+
+本许可证由 WT‑XDWI 发布，如有任何疑问或需要商业授权，请通过以下方式联系：
+
+- GitHub：https://github.com/WT-XDWI
+
+使用本软件即表示您已详细阅读并完全理解本许可证的全部条款，并自愿受其约束。如您不接受上述任何条款，请勿使用本软件。
+
+最后修订日期：2026 年 7 月 24 日
+
+
+═══════════════════════════════════════════════════════════════════
+                          ENGLISH VERSION
+═══════════════════════════════════════════════════════════════════
+
+
+Non‑Commercial Use License v5.4
+
+Effective Date: July 24, 2026
+
+Copyright © 2026 WT‑XDWI (hereinafter “Licensor”)
+
+【SPECIAL NOTICE】
+This License is a legally binding contract. Before downloading, installing, copying, using, or otherwise accessing the Software, you are required to read all terms of this License carefully, especially those marked in bold or underlined, as they may disclaim or limit the Licensor’s liability or restrict your rights. You have the right to contact the Licensor via GitHub for consultation regarding this License. If you have any questions about this License, it is recommended that you fully understand and accept all terms before using the Software.
+
+By using the Software, you acknowledge that you have read, understood, and accepted all terms of this License. If you do not agree to any term, do not use the Software.
+
+
+Chapter 1: Definitions and Interpretation
+
+1.1 “Software” means all content provided by the Licensor, including but not limited to:
+    (a) executable files and source code;
+    (b) libraries, modules, plugins, extensions, drivers;
+    (c) documentation, tutorials, comments, sample code;
+    (d) configuration files, data structures, database schemas;
+    (e) design drawings, prototypes, user interface layouts;
+    (f) images, icons, sound effects, fonts, video materials;
+    (g) API definitions, interface specifications, network protocols;
+    (h) any subsequent versions, patches, updates, upgrades, enhancements, or fixes;
+    (i) test cases, test data, performance benchmarks;
+    (j) associated scripts, build tools, deployment configurations.
+
+1.2 “Commercial Purpose” means any activity that has profit‑making as its direct objective, using the Software or its Derivative Works for any activity that directly generates monetary income or commercial profit, including but not limited to:
+    (a) selling, renting, leasing, licensing, pledging, assigning, or hosting the Software or its Derivative Works for a fee;
+    (b) using the Software or its Derivative Works as a core part of a product or service for which customers are charged;
+    (c) embedding the Software into any product or service sold to third parties for profit‑making purposes;
+    (d) using the Software to provide fee‑based technical support, consulting, training, implementation, maintenance, or hosting services;
+    (e) developing commercial applications based on the Software and selling or licensing them to third parties;
+    (f) obtaining paid subscriptions or membership revenue through the Software.
+
+For the avoidance of doubt, the following activities do NOT constitute Commercial Purpose:
+    (i) internal technical research, proof of concept, performance testing, and security assessment within an enterprise, even if such activities indirectly bring long‑term benefits to the enterprise;
+    (ii) academic research, educational demonstrations, non‑profit organization activities, and open‑source project development;
+    (iii) personal learning, hobby development, and portfolio display.
+
+The determination of “Commercial Purpose” under this License shall be based on the nature of the use itself, rather than the nature of the user. Any use that cannot be directly classified under the above examples of Commercial Purpose shall be presumed to be Non‑Commercial Purpose, unless the Licensor can provide sufficient evidence that the use has profit‑making as its direct objective.
+
+1.3 “Non‑Commercial Purpose” means all uses other than Commercial Purpose, including but not limited to:
+    (a) personal learning, academic research, technical experimentation, hobby development;
+    (b) educational activities and laboratory exercises of educational institutions;
+    (c) academic research and paper publication of scientific research institutions;
+    (d) public welfare activities and social services of non‑profit organizations;
+    (e) non‑profit public services of government agencies or public sectors;
+    (f) development, improvement, and maintenance of open‑source projects (subject to this License);
+    (g) personal portfolio display and open‑source community contributions;
+    (h) internal testing, evaluation, and performance analysis (not for commercial gain);
+    (i) coding competitions and hackathon activities (not involving commercial prizes);
+    (j) code examples in personal blogs or technical articles;
+    (k) public services of public libraries or community centers.
+
+1.4 “Derivative Work” means any new work created by modifying, translating, adapting, extending, refactoring, combining, or otherwise creating based on the Software or any part thereof, which contains the core functionality or code of the Software.
+
+1.5 “Distribute” means making the Software or Derivative Works available to third parties in any form, including but not limited to:
+    (a) downloading, sharing, copying, or mirroring via network;
+    (b) delivery via physical media (CD, USB drive, hard disk);
+    (c) sending via email or instant messaging;
+    (d) publishing via cloud storage or code hosting platforms;
+    (e) providing via pre‑installation or embedded devices;
+    (f) exposing via API or network services (SaaS model).
+
+1.6 “Modify” means any change to the Software, including but not limited to adding, deleting, reorganizing, optimizing, fixing defects, enhancing functionality, adjusting performance, and changing the user interface.
+
+1.7 “Source Code” means the human‑readable original program code, which is understandable, modifiable, and compilable.
+
+1.8 “Object Code” means machine‑executable code generated after compilation, assembly, or interpretation.
+
+1.9 “Licensor” means WT‑XDWI and its legal successors or assigns.
+
+1.10 “Licensee” means any individual or entity that lawfully uses the Software and is bound by this License.
+
+1.11 “Commercial License” means a separate written license granted by the Licensor permitting the Licensee to use the Software for Commercial Purposes.
+
+1.12 “Contributor” means any individual or organization that submits modifications, patches, enhancements, or suggestions to the Software, whether or not attributed.
+
+1.13 “Feedback” means bug reports, improvement suggestions, reviews, or other information provided by the Licensee to the Licensor regarding the Software.
+
+1.14 “Confidential Information” means undisclosed algorithms, designs, ideas, strategies, data, test results, and other information contained in the Software.
+
+1.15 “Force Majeure” means unforeseeable, unavoidable, and insurmountable objective circumstances, including but not limited to natural disasters (earthquakes, floods, fires), war, terrorist attacks, strikes, government actions, cyber attacks, power outages, and communication failures.
+
+1.16 “Audit” means the Licensor’s compliance inspection of the Licensee’s use of the Software.
+
+
+Chapter 2: Grant of License
+
+2.1 The Licensor grants the Licensee a worldwide, non‑exclusive, non‑transferable, non‑sublicensable, royalty‑free license to use, copy, modify, merge, publish, and distribute the Software and its Derivative Works for Non‑Commercial Purposes, subject to all terms of this License.
+
+2.2 This license applies to both Source Code and Object Code forms, both of which are protected by this License.
+
+2.3 The Licensee may embed the Software into its own projects, provided that the overall nature of the project remains Non‑Commercial and does not circumvent the restrictions of this License.
+
+2.4 This license does not grant the Licensee any trademark rights, patent rights, design rights, or other intellectual property rights, but expressly permits the reasonable use of the Licensor’s name for modification and distribution purposes (limited to necessary functional attribution, such as “This software is based on the m4a2mp3 project by WT‑XDWI”).
+
+2.5 The Licensor reserves the right to update the Software (including patches, updates, and upgrades) at any time. The Licensee may choose whether to install updates. Not installing updates does not affect the granted license but may affect the performance or security of the Software.
+
+2.6 This license does not restrict the Licensee’s rights to use third‑party libraries (if any) on which the Software depends, provided that the Licensee complies with the license terms of those third‑party libraries.
+
+2.7 The Licensee has the right to remove or replace any part of the Software, but if removal renders the Software unusable, the Licensee bears sole responsibility.
+
+2.8 This license is a personal license and shall not be shared within an organization (unless the organization as a whole is considered a single Licensee and all users are aware of and agree to comply with this License).
+
+2.9 This license remains in effect indefinitely until the Licensee violates this License or is terminated for other reasons.
+
+2.10 The Licensee may install the Software on multiple devices, provided that all devices comply with this License.
+
+
+Chapter 3: Usage Restrictions and Prohibited Conduct
+
+3.1 Commercial use is strictly prohibited. The Licensee shall not use the Software or its Derivative Works for any Commercial Purpose, whether or not such activity generates revenue.
+
+3.2 Prohibition on removing or hiding copyright information. The Licensee shall not remove, modify, obscure, or blur any copyright notices, trademark information, license text, author attribution, or disclaimers contained in the Software, including but not limited to:
+    (a) comments or headers in source code;
+    (b) statements in documentation, README, and help files;
+    (c) splash screens, about dialogs, and status bars;
+    (d) output information, logs, and error messages;
+    (e) metadata in packaged files.
+
+3.3 Prohibition on sublicensing. The Licensee shall not sublicense any rights granted under this License to any third party, nor shall the Licensee provide the Software as a service (including but not limited to SaaS, PaaS, DaaS) to external users, unless such service is Non‑Commercial in nature.
+
+3.4 Prohibition on reverse engineering. The Licensee shall not reverse engineer, decompile, disassemble, or attempt to extract the source code of the Software, except where expressly permitted by law and where such information cannot otherwise be obtained.
+
+3.5 Prohibition on false endorsement. The Licensee shall not claim that the Software was independently developed by the Licensee, nor imply that the Licensor endorses, sponsors, or affiliates with its Derivative Works.
+
+3.6 Prohibition on trademark misuse. The Licensee shall not use the Licensor’s name, trademarks, logos, domain names, or commercial symbols for any unauthorized promotion, advertising, marketing, or commercial activity.
+
+3.7 Prohibition on malicious use. The Licensee shall not use the Software for any illegal, infringing, network‑compromising, virus‑spreading, extortionate, fraudulent, or public‑disorder‑disturbing activity.
+
+3.8 Prohibition on circumventing technical protection measures. The Licensee shall not bypass any technical restrictions that may exist in the Software, such as encryption, license verification, or time locks.
+
+3.9 Prohibition on discriminatory or human rights‑violating conduct.
+
+3.10 Prohibition on surveillance, tracking, or unauthorized data collection.
+
+3.11 Prohibition on military or national security‑related use unless specifically authorized in writing by the Licensor.
+
+3.12 Prohibition on use in nuclear, chemical, biological weapons, or other weapons of mass destruction‑related activities.
+
+3.13 The Licensee acknowledges and agrees that the definition of “Commercial Purpose” under this License shall be interpreted in accordance with the laws of the People’s Republic of China.
+
+
+Chapter 4: Distribution and Redistribution Conditions
+
+4.1 When distributing the Software or Derivative Works, the Licensee must comply with all of the following conditions:
+    (a) include a complete copy of this License with the distributed material (or clearly indicate where the License can be obtained);
+    (b) retain the original copyright notice, license notice, disclaimer, and attribution notice;
+    (c) if modified, clearly indicate the modifier’s name, modification date, and summary of changes, and add a file named “MODIFICATIONS” or “CHANGELOG” at the project root recording all changes;
+    (d) if distributing in Object Code form, simultaneously provide the corresponding Source Code via a publicly accessible repository, and such Source Code must remain readable, modifiable, and subject to this License;
+    (e) not impose any additional restrictions or terms on the distributed material, nor alter the core obligations of this License;
+    (f) ensure that recipients of the distributed material can easily read and accept this License;
+    (g) if the distribution contains third‑party code, clearly attribute and comply with their respective license terms.
+
+4.2 The Licensee shall not integrate the Software or its Derivative Works into any commercial distribution platform (such as app stores, paid software libraries, commercial websites), unless such platform is expressly Non‑Commercial and does not charge users.
+
+4.3 Any distribution is solely at the Licensee’s own risk, including but not limited to ensuring that the distributed content is lawful, secure, and does not infringe upon third‑party rights.
+
+4.4 If the Derivative Work contains third‑party code or resources, the Licensee must ensure that such third‑party licenses do not conflict with this distribution.
+
+4.5 The Licensee must ensure that no malicious code, backdoors, or security vulnerabilities are introduced when distributing the Software.
+
+
+Chapter 5: Copyright and Intellectual Property
+
+5.1 All copyrights, trademark rights, patent rights, trade secrets, database rights, design rights, and other intellectual property rights (whether registered or not) in and to the Software and its Derivative Works are owned by the Licensor and are protected by relevant domestic and international laws.
+
+5.2 The Licensee obtains only the limited right of use expressly granted by this License and does not acquire any ownership or transfer of intellectual property.
+
+5.3 The Licensor reserves all rights not expressly granted herein, including but not limited to Commercial Licenses, exclusive licenses, and assignment rights.
+
+5.4 The Licensee shall not challenge, question, or attack the validity of the Licensor’s intellectual property rights in the Software.
+
+5.5 The Licensee shall not use the Software for patent infringement litigation or related activities.
+
+5.6 If the Licensee submits contributions (code, documentation, design, etc.) to the Software, unless otherwise agreed in writing, the Licensee is deemed to have granted the Licensor a non‑exclusive, irrevocable, worldwide, royalty‑free license to use, copy, modify, and distribute such contributions, solely for the purpose of integrating and distributing the Software. The Contributor retains ownership of and the right to license its contributions to others.
+
+5.7 Contributors must ensure that their contributions do not infringe upon any third‑party intellectual property rights.
+
+5.8 The Licensor has the right to review, modify, or reject contributions, with final decision‑making authority vested in the Licensor.
+
+
+Chapter 6: Disclaimer of Warranties
+
+6.1 To the maximum extent permitted by applicable law, the Software is provided “AS IS”, without warranty of any kind, express or implied, including but not limited to:
+    (a) merchantability;
+    (b) fitness for a particular purpose;
+    (c) non‑infringement of third‑party intellectual property rights;
+    (d) security, completeness, reliability;
+    (e) correctness, accuracy, freedom from errors;
+    (f) compatibility with other software;
+    (g) whether it meets the Licensee’s requirements;
+    (h) whether performance meets expectations;
+    (i) whether it contains any vulnerabilities or defects.
+
+6.2 The Licensor does not warrant that the Software is free from viruses, malicious code, backdoors, or other harmful components.
+
+6.3 By using the Software, the Licensee acknowledges and accepts all risks, and the Licensor assumes no liability for any consequences arising from the use of the Software.
+
+6.4 Any oral or written information or advice does not constitute a warranty.
+
+
+Chapter 7: Limitation of Liability
+
+7.1 To the maximum extent permitted by applicable law, the Licensor shall not be liable to the Licensee or any third party for any indirect, incidental, or consequential damages arising from the use, modification, distribution, or inability to use the Software, including but not limited to loss of profits, data loss, business interruption, goodwill damage, loss of opportunity, and reputational damage (collectively, “Indirect Damages”).
+
+7.2 No disclaimer or limitation of liability provision in this License shall affect the Licensor’s liability for direct damages caused by the Licensor’s intentional or grossly negligent conduct. Pursuant to Article 506 of the Civil Code of the People’s Republic of China, disclaimer clauses that exclude liability for intentional or grossly negligent conduct causing property damage to another party are invalid.
+
+7.3 If the laws of certain countries or regions do not allow the exclusion or limitation of liability, the Licensor’s total cumulative liability (if any) shall not exceed the amount actually paid by the Licensee to the Licensor for the Software (if any), and in no event shall exceed One Hundred US Dollars (USD 100).
+
+7.4 The above limitations apply to any type of action, whether in contract, tort (including negligence), strict liability, or other legal theory.
+
+7.5 The Licensee shall use the Software reasonably and in good faith when exercising the rights granted under this License. The Licensor shall also act reasonably and in good faith when exercising its rights under this License.
+
+
+Chapter 8: Indemnification
+
+8.1 The Licensee agrees that if the Licensor suffers any third‑party claim, litigation, administrative investigation, or injunction as a result of the Licensee’s breach of this License, or as a result of the Licensee’s use, modification, or distribution of the Software or its Derivative Works, and such claim, litigation, investigation, or injunction has a direct causal relationship with the Licensee’s conduct, the Licensee shall indemnify the Licensor for the direct losses, costs, and expenses (including but not limited to reasonable attorneys’ fees, court costs, arbitration fees, travel expenses, and settlement amounts) suffered thereby, and hold the Licensor harmless.
+
+The Licensor shall promptly notify the Licensee of any claim or litigation and allow the Licensee to participate in the defense. The Licensor shall handle claims reasonably and shall not unreasonably refuse to settle.
+
+8.2 The Licensor has the right to select its own counsel and control the defense, and the Licensee shall cooperate and provide necessary assistance.
+
+8.3 The Licensee shall not, without the Licensor’s written consent, enter into any settlement that may affect the Licensor’s rights.
+
+8.4 If the Licensee fails to timely indemnify the Licensor for its losses, the Licensor has the right to deduct the corresponding amount from any amounts payable to the Licensee, or take other legal measures to recover.
+
+8.5 The total indemnity obligation of the Licensee under this section shall not exceed the total amount of direct economic benefits obtained by the Licensee from using the Software (if any).
+
+
+Chapter 9: Termination and Reinstatement
+
+9.1 If the Licensee violates any term of this License, this license shall automatically terminate immediately without prior notice (“Termination for Cause”). Under Chinese judicial practice, open‑source licenses are legally characterized as copyright license agreements with a resolutive condition, and breach of the agreement results in automatic termination.
+
+9.2 Upon termination, the Licensee must immediately:
+    (a) cease using the Software;
+    (b) delete or destroy all physical and electronic copies (including Derivative Works) still held or controlled by the Licensee at the time of termination;
+    (c) provide written certification of destruction to the Licensor (if required by the Licensor).
+    For Derivative Works already distributed to third parties prior to termination, the Licensee is not required to retroactively recall or destroy them, but shall notify the recipients that this License has been terminated and that the recipients’ use shall comply with the terms of this License.
+
+9.3 The Licensor reserves all rights to pursue legal remedies against the breaching party, including but not limited to claiming damages, seeking preliminary injunctions, permanent injunctions, and recovering reasonable costs.
+
+9.4 If the Licensee can prove that the breach was inadvertent or due to misunderstanding and fully corrects the breach within 30 calendar days of receiving written notice from the Licensor, the Licensor may (in its discretion) reinstate the license, but such reinstatement does not constitute a waiver of any subsequent breach.
+
+9.5 Upon termination, the following Articles shall remain in effect: 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, and 31.
+
+
+Chapter 10: Dispute Resolution and Governing Law
+
+10.1 The validity, interpretation, enforcement, and dispute resolution of this License shall be governed by the laws of the People’s Republic of China.
+
+10.2 Any dispute arising out of or in connection with this License or the Software shall first be settled through friendly negotiation for a period of no less than 30 days. The parties agree that negotiation may be conducted by written correspondence, email, or online conference.
+
+10.3 If negotiation fails to resolve the dispute, either party may submit the dispute to the competent court in the Licensor’s domicile for litigation, and the Licensee irrevocably consents to the jurisdiction of such court. The parties confirm that this provision does not exclude the Licensee’s right to bring an action in the competent court of its domicile, but the Licensor has the right to raise a jurisdictional objection and request that the case be transferred to the court in the Licensor’s domicile.
+
+10.4 During the dispute resolution process, the parties shall continue to perform the other provisions of this License not subject to the dispute.
+
+
+Chapter 11: Export Control and Compliance
+
+11.1 The Licensee shall comply with all applicable export control, economic sanctions, and trade restriction laws and regulations, including but not limited to the PRC Export Control Law, the Regulations on the Export Control of Dual‑Use Items, the Foreign Trade Law, the U.S. Export Administration Regulations (EAR), and EU sanctions regulations.
+
+11.2 The Licensee shall not export, re‑export, or transfer the Software to any restricted country, region, or entity, nor use it for any prohibited end‑use (including proliferation of weapons of mass destruction, military purposes, or terrorist activities).
+
+11.3 The Licensee shall obtain all necessary export licenses or government approvals and cooperate with the Licensor in providing relevant documentation.
+
+11.4 The Licensor has the right to require the Licensee to provide export compliance certification documents.
+
+
+Chapter 12: Data Protection and Privacy
+
+12.1 If the Software involves the collection, processing, storage, or transmission of personal data or sensitive data, the Licensee must comply with all applicable data protection laws, including but not limited to:
+    (a) the PRC Personal Information Protection Law, Data Security Law, and Cybersecurity Law;
+    (b) the EU General Data Protection Regulation (GDPR);
+    (c) the U.S. California Consumer Privacy Act (CCPA), etc.
+
+12.2 The Licensee shall ensure that its data processing activities have a lawful basis (such as user consent, contractual necessity, etc.) and shall adopt appropriate technical and organizational measures to safeguard data security.
+
+12.3 The Licensor assumes no liability for the Licensee’s data processing activities, nor for any legal consequences arising from the Licensee’s processing of data.
+
+12.4 The Licensee shall clearly describe its data processing practices when using the Software in its privacy policy.
+
+
+Chapter 13: Force Majeure
+
+13.1 If either party is unable to perform its obligations under this License due to a Force Majeure event, that party shall promptly notify the other party and provide proof of the Force Majeure event within a reasonable period.
+
+13.2 Force Majeure events include but are not limited to:
+    (a) natural disasters (earthquakes, floods, typhoons, volcanic eruptions, tsunamis, landslides);
+    (b) human‑made disasters (war, armed conflict, terrorist attacks, riots, strikes, civil unrest);
+    (c) governmental actions (embargoes, blockades, expropriation, changes in law, government orders);
+    (d) technical failures (power outages, communication failures, internet outages, data center outages, satellite failures);
+    (e) public health events (epidemics, pandemics, quarantines);
+    (f) other events beyond the reasonable control of both parties.
+
+13.3 Delays or non‑performance caused by Force Majeure shall not constitute a breach of contract, but the affected party shall make reasonable efforts to mitigate the impact.
+
+13.4 If a Force Majeure event continues for more than 60 days, either party has the right to terminate this License.
+
+
+Chapter 14: Term
+
+14.1 This License is effective indefinitely, provided that the Licensee continuously complies with all terms.
+
+14.2 The Licensee may terminate this License at any time by written notice to the Licensor, but the surviving provisions shall remain in effect.
+
+
+Chapter 15: Notices
+
+15.1 All formal notices shall be given in writing and may be delivered by:
+    (a) email (to the email address published by the Licensor or provided by the Licensee);
+    (b) registered mail or courier (to the address published by the Licensor);
+    (c) posting an announcement on the Licensor’s official website or GitHub repository (deemed delivered to all Licensees).
+
+15.2 Notice delivery times are:
+    (a) email: 24 hours after sending;
+    (b) registered mail: 7 days after posting;
+    (c) announcement: the date of publication.
+
+15.3 Both parties shall maintain valid contact information and notify the other party of any changes in a timely manner.
+
+
+Chapter 16: Licensor’s Rights
+
+16.1 The Licensor has the right, when it has reasonable grounds to believe that the Licensee may be in breach of this License, to audit the Licensee’s use of the Software to ensure compliance. Audit requests shall be made in writing and shall state the reasonable grounds.
+
+16.2 Audits may be requested in writing, and the Licensee shall provide necessary usage data or access within 15 working days of receiving the request. The same Licensee shall not be audited more than once within a 12‑month period, unless there is new reasonable suspicion.
+
+16.3 Audit costs shall be borne by the Licensor, but if a violation is found, the violating party shall bear all audit costs.
+
+16.4 The Licensor has the right to request copies of the portions of the Source Code of the Licensee’s Derivative Works that are directly relevant to verifying compliance with this License; provided that such Source Code shall be provided solely for the purpose of verifying the Licensee’s compliance with this License. All Source Code and other information obtained by the Licensor shall be subject to confidentiality obligations under Article 20 and shall not be used for any other purpose. The Licensee may require the Licensor to sign a separate confidentiality agreement and may reasonably redact trade secrets unrelated to compliance verification before providing the code.
+
+16.5 The Licensor has the right to request detailed records of the Licensee’s use of the Software, including but not limited to usage scenarios, distribution records, and modification details.
+
+
+Chapter 17: Licensee’s Obligations
+
+17.1 The Licensee shall bear all hardware, software, network, and technical support costs necessary for using the Software.
+
+17.2 The Licensee shall maintain records of its use of the Software and provide them to the Licensor when necessary.
+
+17.3 The Licensee shall ensure that its employees, agents, and contractors are aware of and comply with this License.
+
+17.4 The Licensee shall attach complete modification records to distributed Derivative Works and retain the original author attribution.
+
+17.5 The Licensee shall not use the Software for any form of discrimination, hate speech, or human rights violations.
+
+17.6 The Licensee shall ensure that its use of the Software complies with all applicable laws and regulations of its jurisdiction.
+
+17.7 The Licensee shall actively cooperate with the Licensor’s compliance inspections.
+
+
+Chapter 18: Feedback and Contributions
+
+18.1 If the Licensee provides Feedback to the Licensor (including but not limited to bug reports, improvement suggestions, and reviews), the Licensor has the right to use such Feedback in any manner without restriction.
+
+18.2 Licensees who submit contributions (code, documentation, design, etc.) to the Software, unless otherwise agreed in writing, are deemed to have granted the Licensor a non‑exclusive, irrevocable, worldwide, royalty‑free license to use, copy, modify, and distribute such contributions, solely for the purpose of integrating and distributing the Software. Contributors retain ownership of and the right to license their contributions to others.
+
+18.3 Contributors must ensure that their contributions do not infringe upon any third‑party intellectual property rights.
+
+18.4 The Licensor has the right to review, modify, or reject contributions, with final decision‑making authority vested in the Licensor.
+
+
+Chapter 19: Third‑Party Software Compatibility
+
+19.1 The Software may contain or depend on third‑party open‑source libraries, the use of which shall be governed by their respective license agreements. This License does not affect those third‑party licenses.
+
+19.2 The Licensee shall independently comply with the terms of those third‑party licenses.
+
+19.3 The Licensor assumes no liability for any issues with third‑party software.
+
+
+Chapter 20: Confidentiality Obligations
+
+20.1 The Licensee shall not disclose undisclosed algorithms, designs, performance metrics, test data, roadmaps, or other Confidential Information contained in the Software.
+
+20.2 Confidentiality obligations shall survive the termination of this License until such information enters the public domain.
+
+20.3 Confidential Information does not include:
+    (a) information that is already publicly available;
+    (b) information independently developed by the Licensee;
+    (c) information lawfully obtained from a third party.
+
+
+Chapter 21: Exclusion of Warranties
+
+21.1 Except as required by mandatory law, the Licensor provides no express or implied warranties.
+
+21.2 Any oral or written information or advice does not constitute a warranty.
+
+21.3 The Licensee shall independently evaluate the quality and suitability of the Software.
+
+
+Chapter 22: Refinement of Liability Cap
+
+22.1 If the liability limitation in Article 7 is held invalid by a court, the Licensor’s total liability for any single event shall be capped at 50 USD.
+
+22.2 The cumulative liability cap for consecutive events shall be 100 USD.
+
+22.3 The above liability caps do not apply to damages caused by intentional or grossly negligent conduct as provided in Article 7.2.
+
+
+Chapter 23: Severability
+
+23.1 If any provision of this License is held invalid, illegal, or unenforceable, that provision shall be modified to the minimum extent necessary to make it valid, and the remaining provisions shall remain in full force and effect.
+
+
+Chapter 24: Language
+
+24.1 If this License is translated into other languages, the Chinese version shall have final legal effect (if the Licensor is domiciled in China); if the Licensor is not domiciled in China, the English version shall prevail (if provided).
+
+24.2 This License is written in Chinese. In case of ambiguity, it shall be interpreted reasonably in light of the overall purpose and context of the License.
+
+
+Chapter 25: Alternative Dispute Resolution (Mediation Recommendation)
+
+25.1 The parties recommend that before initiating arbitration or litigation, they submit the dispute to an independent mediator mutually agreed upon for mediation. The mediation period shall be 60 days, which may be shortened or extended by mutual agreement.
+
+25.2 Mediation costs shall be borne equally by both parties, unless otherwise provided in the mediation agreement.
+
+25.3 All communications during the mediation process shall be treated as confidential and shall not be admissible as evidence in subsequent arbitration or litigation.
+
+
+Chapter 26: Electronic Signature Validity
+
+26.1 The parties confirm that acceptance of this License by electronic means (including but not limited to clicking to confirm, downloading the Software, or using the Software) has the same legal effect as a handwritten signature.
+
+
+Chapter 27: Survival
+
+27.1 The following Articles shall survive the termination of this License:
+    - Article 5 (Copyright and Intellectual Property)
+    - Article 6 (Disclaimer of Warranties)
+    - Article 7 (Limitation of Liability)
+    - Article 8 (Indemnification)
+    - Article 10 (Dispute Resolution)
+    - Article 11 (Export Control)
+    - Article 12 (Data Protection)
+    - Article 20 (Confidentiality Obligations)
+    - Article 25 (Mediation Recommendation)
+    - Article 27 (This Article itself)
+
+
+Chapter 28: Entire Agreement
+
+28.1 This License constitutes the entire and exclusive agreement between the parties regarding the use of the Software, superseding all prior or contemporaneous oral or written communications, memoranda, commitments, and representations.
+
+28.2 Any amendment, supplement, or waiver of this License shall be in writing and signed by both parties.
+
+
+Chapter 29: Amendment of the License
+
+29.1 The Licensor reserves the right to amend this License. Amended versions shall be published on the official page 30 days in advance, with the amendment date and summary of changes noted.
+
+29.2 The Licensee may, before the amendment takes effect, notify the Licensor in writing of its refusal to accept the amendment and terminate this License. If the Licensee continues to use the Software after the amendment takes effect, it shall be deemed to have accepted the amended version.
+
+
+Chapter 30: Open‑Source License Compatibility
+
+30.1 This License is an independent non‑commercial use license.
+
+30.2 If the Software contains or is derived from code subject to other open‑source licenses (such as GPL, AGPL, EUPL, LGPL) (“Other Open‑Source Licenses”), and this License conflicts with an applicable Other Open‑Source License, the terms of that Other Open‑Source License shall prevail, but only to the extent of the conflict. The Licensee shall simultaneously comply with those Other Open‑Source Licenses.
+
+30.3 A list of the third‑party components on which the Software depends, together with their respective licenses, is provided in THIRD‑PARTY‑NOTICES.md in the repository root. Such third‑party components do not form part of the “Software” as defined in this License; their acquisition, use, and distribution are governed by their respective license terms and are not subject to the Commercial Purpose restriction in Article 1.2 of this License.
+
+30.4 Special Notice: ffmpeg‑core (GPL‑2.0‑or‑later) and lamejs (LGPL‑3.0), which are required for the operation of the Software, are obtained separately by the Licensee via public CDNs and are NOT distributed by this repository:
+    (a) this repository does not contain the binary files of the above components;
+    (b) if the Licensee intends to use such components for Commercial Purposes, the Licensee shall independently confirm with and obtain authorization from the respective rights holders;
+    (c) the Licensor assumes no liability for the Licensee’s use of such third‑party components.
+
+
+Chapter 31: Trademark and Name Use
+
+31.1 The Licensee shall not use the Licensor’s name, trademarks, logos, domain names, or commercial symbols for any form of promotion, advertising, marketing, or commercial activity without the Licensor’s written authorization.
+
+31.2 Subject to compliance with this License, the Licensee may reasonably use the Licensor’s name for objective attribution (e.g., “This software is based on the m4a2mp3 project by WT‑XDWI”).
+
+
+Appendix A: Commercial Purpose Examples (Non‑Exhaustive)
+
+For ease of understanding, the following scenarios clearly constitute Commercial Purpose:
+
+1. Embedding the Software into an enterprise management system sold to clients;
+2. Using the Software to analyze internal sales data to optimize marketing strategies;
+3. Using the Software as part of an online education platform and charging course fees;
+4. Demonstrating the Software at commercial exhibitions to attract investors;
+5. Generating analysis reports using the Software and selling them to third parties;
+6. Providing customized development services based on the Software to external clients for a fee;
+7. Placing advertisements in the Software to generate advertising revenue;
+8. Collecting user behavioral data through the Software for commercial monetization;
+9. Using the Software as a management tool for franchisees;
+10. Using the Software for cryptocurrency mining;
+11. Using the Software as part of a commercial product for marketing purposes;
+12. Providing paid technical support to clients using the Software;
+13. Developing commercial software based on the Software and selling it;
+14. Using the Software as an internal daily operational tool to support the production, management, or service delivery of the core business, rather than solely for technical research or testing and evaluation purposes;
+15. Using the Software for automated processing of commercial contracts;
+16. Using the Software for the development of financial trading systems;
+17. Using the Software for market research and selling the research results;
+18. Integrating the Software into commercial hardware products;
+19. Using the Software for commercial bidding project development;
+20. Providing the Software as a paid API service;
+21. Using the Software for commercial training of artificial intelligence models;
+22. Using the Software for the development of recommendation algorithms on e‑commerce platforms.
+
+
+Appendix B: Non‑Commercial Purpose Examples (Non‑Exhaustive)
+
+The following scenarios clearly constitute Non‑Commercial Purpose:
+
+1. Students learning programming skills for personal education;
+2. University professors demonstrating in classroom teaching;
+3. Open‑source community developers adding features and submitting Pull Requests;
+4. Non‑profit organizations using it for internal volunteer management;
+5. Government meteorological departments using it for data analysis (free of charge);
+6. Individuals creating game mods and releasing them for free;
+7. Researchers using it for experimental validation in papers;
+8. Using it as a competition entry in coding contests;
+9. Using it as a technical example in personal blogs;
+10. Public libraries providing free access;
+11. Internal research projects of academic institutions;
+12. Hobbyist development by personal enthusiasts;
+13. Student projects at educational institutions;
+14. Public welfare activities of non‑profit organizations;
+15. Non‑profit public services of government agencies;
+16. Open‑source community technical exchanges;
+17. Personal portfolio display;
+18. Hackathon event entries;
+19. Free demonstrations by technical training institutions;
+20. Public service projects at community centers;
+21. Code citations in personal study notes;
+22. Example code in technical books.
+
+
+Appendix C: Licensee Compliance Checklist
+
+Licensees should periodically self‑assess against the following checklist:
+
+- [ ] Have you confirmed that your use of the Software is for Non‑Commercial Purposes?
+- [ ] Have you retained the complete copyright and license notices?
+- [ ] Have you not reverse‑engineered the Software?
+- [ ] Have you not used the Software for any commercial activities?
+- [ ] When distributing, did you include the complete License text?
+- [ ] When modifying, did you record the modifications?
+- [ ] Have you not used the Licensor’s trademarks for promotion?
+- [ ] Have you complied with all export control laws?
+- [ ] When processing personal data, have you complied with data protection laws?
+- [ ] Have you retained usage records for audit purposes?
+- [ ] Have you not used the Software for AI/large model training?
+- [ ] Have you complied with all applicable third‑party open‑source licenses?
+
+
+Appendix D: Frequently Asked Questions (FAQ)
+
+Q1: Can I use the Software inside my company?
+A1: Yes, provided that the usage is for Non‑Commercial Purposes (such as internal technical research, testing, and evaluation), and not for any commercial operations or revenue‑generating activities.
+
+Q2: Can I integrate the Software into my open‑source project?
+A2: Yes, provided that your project as a whole is Non‑Commercial in nature and also complies with the terms of this License.
+
+Q3: Can I use the Software for teaching?
+A3: Yes, teaching is a Non‑Commercial Purpose, but you may not charge fees directly related to the Software.
+
+Q4: What if I want to use the Software for a commercial project?
+A4: Please contact the Licensor via GitHub or email to obtain a Commercial License.
+
+Q5: If I find a vulnerability in the Software, may I disclose it publicly?
+A5: It is recommended to first report the vulnerability to the Licensor and wait for it to be fixed before public disclosure, to avoid security risks.
+
+Q6: Can I modify the Software and publish my modified version?
+A6: Yes, but you must comply with the distribution conditions of this License, including retaining copyright notices, documenting modifications, and attaching a copy of the License.
+
+Q7: What is the difference between this License and the MIT License?
+A7: The MIT License permits commercial use, whereas this License expressly prohibits commercial use and requires complete retention of license notices and modification records.
+
+Q8: Can I display the Software on my website?
+A8: Yes, provided that the website does not involve commercial activities (such as charging fees, displaying advertisements, etc.).
+
+Q9: The Software contains third‑party code; do I need to comply with their licenses?
+A9: Yes, you must comply with all third‑party code license terms.
+
+Q10: Does donating to the project count as Commercial Purpose?
+A10: Donation itself is generally not considered Commercial Purpose, provided that:
+    (a) the donation is unrelated to the right to use the Software;
+    (b) the donation does not constitute consideration for purchasing or subscribing to the Software;
+    (c) the donation does not affect the fair and open availability of the Software to all users.
+
+Q11: Is this License legally enforceable in Chinese courts?
+A11: Yes. Chinese courts have indirectly recognized the legal validity of open‑source licenses in multiple cases. As a copyright license agreement with a resolutive condition, this License is enforceable under the Chinese legal framework.
+
+Q12: Can I use the Software for artificial intelligence model training?
+A12: No. Article 1.2 of this License expressly prohibits using the Software for any AI, machine learning, or large language model training.
+
+
+Appendix E: Export Control and Data Protection Compliance Reference
+
+This appendix provides compliance references for the latest regulatory developments in export control and data protection. It is not contractually binding — it serves as a practical compliance guide.
+
+1. Export Control
+
+| # | Regulation / Document | Effective / Updated | Key Points |
+| :-: | :--- | :--- | :--- |
+| 1 | Export Control Law of the PRC | Dec 1, 2020 | Establishes the basic export control system, covering controlled items, controlled activities, licensing, and extraterritorial jurisdiction |
+| 2 | Regulations on the Export Control of Dual‑Use Items | 2024 | Refines the scope and control measures for dual‑use items |
+| 3 | Dual‑Use Items Export Control List | Updated Oct 2025 | Specifies controlled items — licensees should periodically verify |
+| 4 | Foreign Trade Law | Revised Mar 1, 2026 | Adds new export control‑related institutional arrangements |
+| 5 | New Customs Declaration Rules | Apr–Jun 2026 | General Administration of Customs added two new declaration fields: “Restricted Control Identification Code” and “Restricted Control Declaration Elements” |
+| 6 | U.S. Export Administration Regulations (EAR) & EU Sanctions Regulations | — | Must also be complied with if the Licensee is in or involves relevant jurisdictions |
+
+Tip: Licensees should regularly check for updates from the Ministry of Commerce (www.mofcom.gov.cn) and the General Administration of Customs (www.customs.gov.cn).
+
+2. Data Protection
+
+| # | Regulation / Standard | Effective / Published | Key Points |
+| :-: | :--- | :--- | :--- |
+| 1 | Personal Information Protection Law (PIPL) | Nov 1, 2021 | Establishes personal information processing rules, regulates automated decision‑making and cross‑border transfers |
+| 2 | Data Security Law | Sep 1, 2021 | Establishes a data classification and grading protection system, defines security obligations for important data processors |
+| 3 | Cybersecurity Law | Jun 1, 2017 | Requires network operators to fulfill cybersecurity protection obligations |
+| 4 | GB/T 46068‑2025 | Mar 1, 2026 | Technical standard for personal information export certification |
+| 5 | Personal Information Export Certification Measures | Published Oct 2025 | Refines the personal information export certification mechanism |
+| 6 | Provisions on Facilitating and Regulating Cross‑Border Data Flows | — | Clarifies circumstances exempt from declaration |
+
+Three Compliance Paths for Personal Information Exports:
+1. Declare for Data Export Security Assessment
+2. Conclude a Standard Contract for Personal Information Export
+3. Obtain Personal Information Protection Certification
+
+Tip: Licensees should ensure a lawful basis for data processing activities and implement appropriate technical and organizational measures to safeguard data security. While the above national standards are not legally mandatory, they serve as best‑practice references for compliance.
+
+
+Final Provisions
+
+This License is issued by WT‑XDWI. For any questions or to obtain a Commercial License, please contact:
+
+- GitHub: https://github.com/WT-XDWI
+
+By using the Software, you acknowledge that you have carefully read and fully understood all terms of this License and voluntarily accept them. If you do not accept any of the above terms, do not use the Software.
+
+Last Revised: July 24, 2026

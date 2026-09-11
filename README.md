@@ -66,12 +66,31 @@ node convert.js "路径/到/歌曲目录" 192
 
 ## 技术栈
 
-| 组件 | 用途 |
-|---|---|
-| [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | 解码各种格式为 PCM |
-| [lamejs](https://github.com/zhuker/lamejs) | PCM 编码为 MP3 |
-| [JSZip](https://github.com/Stuk/jszip) | 打包批量下载 |
+| 组件 | 用途 | 许可证 |
+|---|---|---|
+| [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | 解码各种格式为 PCM | MIT（封装层）/ GPL-2.0（core） |
+| [lamejs](https://github.com/zhuker/lamejs) | PCM 编码为 MP3 | LGPL-3.0 |
+| [JSZip](https://github.com/Stuk/jszip) | 打包批量下载 | MIT |
 
-## License
+## 许可证
 
-MIT
+本项目采用 **非商业使用许可证 v5.4**，全文见 [LICENSE](LICENSE)。
+
+**简言之**：允许个人学习、教学、学术研究、开源社区等非商业用途；
+**禁止**任何以营利为目的的使用（包括嵌入商业产品、付费服务、AI 模型训练等）。
+商业使用需另行取得授权。
+
+### 第三方组件
+
+本项目依赖的部分组件采用不同的许可证，**不受上述非商业限制的约束**：
+
+| 组件 | 许可证 | 说明 |
+|---|---|---|
+| `@ffmpeg/core` | **GPL-2.0-or-later** | 由 CDN 运行时获取，本仓库不分发 |
+| `lamejs` | **LGPL-3.0** | — |
+| `JSZip` | MIT / GPL-3.0 双许可 | 本项目按 MIT 使用 |
+
+详细清单与分发注意事项见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
+
+> ⚠️ 若你计划将本项目用于**商业目的**，请注意 ffmpeg-core 的 GPL-2.0 许可证不允许叠加更严格的限制，
+> 你需要自行就该组件向权利人确认合规方案。本项目的非商业条款**不能凌驾于** GPL 之上。
