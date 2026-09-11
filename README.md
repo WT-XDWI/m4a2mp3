@@ -6,8 +6,8 @@
 
 ```bash
 # 1. 克隆
-git clone https://github.com/<你的用户名>/<仓库名>.git
-cd <仓库名>
+git clone https://github.com/WT-XDWI/m4a2mp3.git
+cd m4a2mp3
 
 # 2. 启动（需要 Node.js，首次会自动下载 31MB 引擎）
 node serve.js
@@ -16,6 +16,12 @@ node serve.js
 浏览器会自动打开页面，把音频文件拖进去即可。
 
 Windows 用户也可以直接**双击 `启动.bat`**。
+
+### 环境要求
+
+- **Node.js**（推荐）或 **Python 3** —— 用于起一个本地 HTTP 服务
+- 首次运行需联网下载 ffmpeg 引擎（约 31 MB），之后缓存在 `vendor/`，不再联网
+- 浏览器：Chrome / Edge / Firefox 等现代浏览器（需支持 WebAssembly）
 
 ## 为什么不能直接双击 index.html
 
@@ -28,6 +34,8 @@ Failed to construct 'Worker': Script ... cannot be accessed from origin 'null'
 这是浏览器的硬性安全限制，**无法用代码绕过**，必须通过本地 HTTP 服务打开。
 
 ## 支持的输入格式
+
+> 除了音频，视频文件也可以直接拖进来，程序会自动提取其中的音轨。
 
 | 类型 | 格式 |
 |---|---|
