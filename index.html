@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M4A → MP3 批量转换</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+    --fg:#e7eaf0; --muted:#9aa3b2; --accent:#4f8cff; --ok:#38c172; --err:#ef4d5a; --warn:#f0b429;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:linear-gradient(180deg,#0f1115,#12151c 40%,#0f1115);
+    color:var(--fg); font:14px/1.6 -apple-system,"Segoe UI",system-ui,"Microsoft YaHei",sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:22px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--muted);margin:0 0 22px;font-size:13px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+
+  #drop{
+    border:2px dashed #333a47; border-radius:12px; padding:34px 18px; text-align:center;
+    transition:.16s; cursor:pointer; background:var(--panel);
+  }
+  #drop:hover{border-color:#49536a;background:var(--panel2)}
+  #drop.over{border-color:var(--accent);background:#182238}
+  #drop .big{font-size:15px;font-weight:600;margin-bottom:4px}
+  #drop .hint{color:var(--muted);font-size:12.5px}
+  #drop .pick{color:var(--accent);text-decoration:underline}
+  input[type=file]{display:none}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+  .toolbar .spacer{flex:1}
+  button{
+    font:inherit; padding:8px 14px; border-radius:8px; border:1px solid var(--line);
+    background:var(--panel2); color:var(--fg); cursor:pointer; transition:.15s;
+  }
+  button:hover:not(:disabled){border-color:#3d4658;background:#242a35}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button.primary:hover:not(:disabled){background:#3f7df0}
+  button.danger:hover:not(:disabled){border-color:var(--err);color:#ffb8be}
+
+  .opts{display:flex;flex-wrap:wrap;gap:18px;align-items:center;font-size:13px;color:var(--muted)}
+  .opts label{display:flex;align-items:center;gap:7px;color:var(--fg)}
+  select,input[type=number]{
+    font:inherit;background:var(--panel2);color:var(--fg);border:1px solid var(--line);
+    border-radius:7px;padding:5px 8px;
+  }
+  input[type=number]{width:78px}
+  input[type=range]{width:130px;accent-color:var(--accent)}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+  td.name{max-width:290px}
+  td.name .fn{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  td.name .meta{color:var(--muted);font-size:11.5px}
+  tr.done td.name .meta{color:var(--ok)}
+  tr.error td.name .meta{color:var(--err)}
+  .status{white-space:nowrap;font-size:12px}
+  .status.done{color:var(--ok)}
+  .status.error{color:var(--err)}
+  .status.working{color:var(--accent)}
+  .bar{height:5px;background:#252a33;border-radius:3px;overflow:hidden;min-width:90px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .18s}
+  tr.done .bar > i{background:var(--ok)}
+  tr.error .bar > i{background:var(--err)}
+  .empty{color:var(--muted);text-align:center;padding:22px 0;font-size:13px}
+  .note{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .note b{color:var(--warn);font-weight:600}
+  a.dl{color:var(--accent);text-decoration:none;font-weight:600}
+  a.dl:hover{text-decoration:underline}
+  .summary{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;margin-top:10px}
+  .summary b{color:var(--fg)}
+  #engine{font-size:12px;color:var(--muted)}
+  #engine.err{color:var(--err)}
+  #engine.ok{color:var(--ok)}
+  code{background:#222732;padding:1px 5px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>音频 → MP3 批量转换</h1>
+  <p class="sub">支持 m4a、flac、wav、ogg、wma、aac、mp4 等常见格式。全部在浏览器本地完成，文件不会上传到任何服务器。</p>
+
+  <div id="drop">
+    <div class="big">把音频 / 视频文件拖到这里</div>
+    <div class="hint">支持 m4a · flac · wav · ogg · opus · wma · aac · aiff · mp3 · mp4 · mkv · mov 等 · 可一次选多个</div>
+    <div class="hint" style="margin-top:6px">或 <span class="pick">点击选择文件</span></div>
+  </div>
+  <input type="file" id="file" multiple accept="audio/*,video/*,.m4a,.m4b,.aac,.flac,.wav,.ogg,.opus,.wma,.aiff,.ape,.wv,.amr,.ac3,.mkv,.avi,.mov,.mp4,.webm,.ts">
+
+  <div class="card" style="margin-top:16px">
+    <div class="opts">
+      <label>码率
+        <select id="bitrate">
+          <option value="320">320 kbps</option>
+          <option value="256">256 kbps</option>
+          <option value="192" selected>192 kbps</option>
+          <option value="160">160 kbps</option>
+          <option value="128">128 kbps</option>
+          <option value="96">96 kbps</option>
+        </select>
+      </label>
+      <label>采样率
+        <select id="rate">
+          <option value="0" selected>保持原样</option>
+          <option value="44100">44100 Hz</option>
+          <option value="48000">48000 Hz</option>
+          <option value="32000">32000 Hz</option>
+          <option value="22050">22050 Hz</option>
+        </select>
+      </label>
+      <label>声道
+        <select id="channels">
+          <option value="0" selected>保持原样</option>
+          <option value="2">立体声</option>
+          <option value="1">单声道</option>
+        </select>
+      </label>
+      <label>并行数
+        <input type="number" id="concurrency" value="2" min="1" max="4">
+      </label>
+      <label><input type="checkbox" id="autorun" checked> 添加后自动开始</label>
+    </div>
+    <p class="note" id="engine">引擎：正在准备…</p>
+    <p class="note" id="compat" style="display:none"></p>
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" id="start" disabled>开始转换</button>
+    <button id="stop" disabled>停止</button>
+    <button id="zip" disabled>打包下载 ZIP</button>
+    <button class="danger" id="clear">清空列表</button>
+    <div class="spacer"></div>
+    <span id="summary" class="summary"></span>
+  </div>
+
+  <div class="card" style="padding:4px 6px">
+    <table>
+      <thead>
+        <tr>
+          <th>文件</th>
+          <th style="width:150px">进度</th>
+          <th style="width:80px">状态</th>
+          <th style="width:100px">下载</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty">列表为空，先添加一些文件吧</div>
+  </div>
+</div>
+
+<script src="vendor/ffmpeg.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js';document.head.appendChild(s)"></script>
+<script src="vendor/lame.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';document.head.appendChild(s)"></script>
+<script src="vendor/jszip.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';document.head.appendChild(s)"></script>
+<script>
+(function () {
+  "use strict";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var drop = $("drop"), fileInput = $("file"), rowsEl = $("rows"), emptyEl = $("empty");
+  var engineEl = $("engine");
+  var compatEl = $("compat");
+  var btnStart = $("start"), btnStop = $("stop"), btnZip = $("zip"), btnClear = $("clear");
+  var summaryEl = $("summary");
+
+  var tasks = [];          // {id, file, name, size, status, progress, blob, url, error}
+  var seq = 0;
+  var running = false;
+  var cancelFlag = false;
+  var ffmpeg = null, ffmpegReady = null;
+  var converted = [];      // blobs ready for ZIP
+
+  var FFMPEG_BASE = "vendor";
+  var FFMPEG_BASE_CDN = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
+
+  /* ---------------- helpers ---------------- */
+
+  function fmtSize(n) {
+    if (n == null) return "";
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+    return (n / 1048576).toFixed(2) + " MB";
+  }
+  function fmtTime(s) {
+    if (!isFinite(s) || s < 0) return "--:--";
+    s = Math.round(s);
+    var m = Math.floor(s / 60), r = s % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+  }
+  function baseName(name) {
+    return name.replace(/\.[^.]+$/, "");
+  }
+  function stripExt(name) { return baseName(name); }
+
+  // ffmpeg handles far more than m4a, so accept any container it can demux.
+  // Video files are allowed too: we drop the video stream and take the audio.
+  var KNOWN_EXTS = [
+    // Apple / AAC family
+    "m4a", "m4b", "m4r", "m4p", "aac", "mp4", "m4v", "mov", "3gp", "3g2", "caf",
+    // lossy
+    "mp3", "ogg", "oga", "opus", "wma", "amr", "awb", "ac3", "eac3", "dts", "mp2", "mpc", "ra", "rm",
+    // lossless / uncompressed
+    "wav", "flac", "aiff", "aif", "aifc", "ape", "wv", "tta", "alac", "dsf", "dff", "au", "snd", "pcm",
+    // video containers we can strip audio from
+    "mkv", "webm", "avi", "flv", "wmv", "mpg", "mpeg", "ts", "m2ts", "mts", "vob", "ogv", "asf", "rmvb"
+  ];
+
+  var ALREADY_MP3 = /\.mp3$/i;
+
+  function isSupported(file) {
+    var n = (file.name || "").toLowerCase();
+    var m = /\.([a-z0-9]+)$/.exec(n);
+    if (m && KNOWN_EXTS.indexOf(m[1]) !== -1) return true;
+    // unknown/absent extension: fall back to MIME sniffing
+    var t = (file.type || "").toLowerCase();
+    return t.indexOf("audio/") === 0 || t.indexOf("video/") === 0;
+  }
+
+  /* ---------------- option compatibility ---------------- */
+
+  // lamejs silently adjusts the output when the requested (bitrate, sampleRate)
+  // pair is not representable in MPEG-1 Layer III. Warn instead of lying to the user.
+  var KNOWN_RATES = [8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000];
+
+  function checkCompatibility() {
+    var bitrate = parseInt($("bitrate").value, 10);
+    var rate = parseInt($("rate").value, 10);
+    var msgs = [];
+
+    if (rate && rate < 32000) {
+      // Below 32kHz lamejs switches to MPEG-2/2.5 and stops honouring low bitrates.
+      msgs.push("选择了 " + rate + " Hz：lamejs 在低于 32 kHz 时会改用 MPEG-2/2.5 编码，实际码率可能与所选值不同。");
+    }
+    if (rate === 0 && bitrate <= 96) {
+      msgs.push("码率 " + bitrate + " kbps 时，源文件若是 44.1 kHz，lamejs 会自动降到 32 kHz 输出（MPEG-1 不允许 44.1 kHz 配这么低的码率）。要保留 44.1 kHz 请选 112 kbps 以上。");
+    }
+    if (rate && KNOWN_RATES.indexOf(rate) === -1) {
+      msgs.push(rate + " Hz 不是 MPEG-1 支持的标准采样率。");
+    }
+
+    if (msgs.length) {
+      compatEl.style.display = "block";
+      compatEl.innerHTML = "<b>提示：</b>" + msgs.join(" ");
+    } else {
+      compatEl.style.display = "none";
+      compatEl.innerHTML = "";
+    }
+  }
+
+  /* ---------------- task list ---------------- */
+
+  function addFiles(fileList) {
+    var added = 0, skipped = 0;
+    var takenNames = {};
+    tasks.forEach(function (t) { takenNames[t.name.toLowerCase()] = true; });
+
+    for (var i = 0; i < fileList.length; i++) {
+      var f = fileList[i];
+      if (!isSupported(f)) { skipped++; continue; }
+      if (f.size === 0) { skipped++; continue; }
+
+      // a.m4a and a.flac both want a.mp3 — keep the list free of collisions
+      var out = stripExt(f.name) + ".mp3";
+      if (takenNames[out.toLowerCase()]) {
+        var n = 2;
+        while (takenNames[(stripExt(f.name) + " (" + n + ").mp3").toLowerCase()]) n++;
+        out = stripExt(f.name) + " (" + n + ").mp3";
+      }
+      takenNames[out.toLowerCase()] = true;
+
+      tasks.push({
+        id: ++seq,
+        file: f,
+        name: out,
+        srcName: f.name,
+        size: f.size,
+        status: "pending",
+        progress: 0,
+        blob: null,
+        url: null,
+        error: null
+      });
+      added++;
+    }
+    render();
+    if (skipped) {
+      $("engine").textContent = "已跳过 " + skipped + " 个文件（格式不支持或文件为空）";
+      $("engine").className = "";
+    }
+    if (added && $("autorun").checked && !running) {
+      // let the browser paint the new rows first
+      setTimeout(function () { if (!running) start(); }, 60);
+    }
+  }
+
+  function clearAll() {
+    if (running) return;
+    tasks.forEach(function (t) { if (t.url) URL.revokeObjectURL(t.url); });
+    tasks = [];
+    converted = [];
+    render();
+  }
+
+  function summaryText() {
+    var done = 0, err = 0, pending = 0, bytes = 0;
+    tasks.forEach(function (t) {
+      if (t.status === "done") { done++; bytes += (t.blob ? t.blob.size : 0); }
+      else if (t.status === "error") err++;
+      else pending++;
+    });
+    var parts = ["<b>" + tasks.length + "</b> 个文件"];
+    if (done) parts.push("完成 <b>" + done + "</b>（" + fmtSize(bytes) + "）");
+    if (err) parts.push("失败 <b>" + err + "</b>");
+    if (pending) parts.push("待处理 <b>" + pending + "</b>");
+    summaryEl.innerHTML = parts.join(" · ");
+  }
+
+  /* ---------------- rendering ---------------- */
+
+  var rowMap = {};
+
+  function buildRow(t) {
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td class="name"><span class="fn"></span><span class="meta"></span></td>' +
+      '<td><div class="bar"><i></i></div></td>' +
+      '<td class="status"></td>' +
+      '<td class="dl"></td>';
+    tr.querySelector(".fn").textContent = t.srcName;
+    rowsEl.appendChild(tr);
+    rowMap[t.id] = tr;
+    return tr;
+  }
+
+  function updateRow(t) {
+    var tr = rowMap[t.id];
+    if (!tr) tr = buildRow(t);
+    var meta = tr.querySelector(".meta");
+    var statusEl = tr.querySelector(".status");
+    var bar = tr.querySelector(".bar > i");
+    var dl = tr.querySelector(".dl");
+
+    tr.className = t.status;
+    bar.style.width = Math.max(0, Math.min(100, t.progress)) + "%";
+
+    if (t.status === "pending") {
+      meta.textContent = "待处理 · " + fmtSize(t.size);
+      statusEl.textContent = "等待";
+      statusEl.className = "status";
+      dl.innerHTML = "";
+    } else if (t.status === "working") {
+      meta.textContent = "转换中 · " + fmtSize(t.size) + (t.phase ? " · " + t.phase : "");
+      statusEl.textContent = Math.round(t.progress) + "%";
+      statusEl.className = "status working";
+      dl.innerHTML = "";
+    } else if (t.status === "done") {
+      meta.textContent = "完成 · " + fmtSize(t.size) + " → " + fmtSize(t.blob ? t.blob.size : 0);
+      statusEl.textContent = "完成";
+      statusEl.className = "status done";
+      dl.innerHTML = '<a class="dl" href="' + t.url + '" download="' + escapeHtml(t.name) + '">下载</a>';
+    } else if (t.status === "error") {
+      meta.textContent = t.error || "转换失败";
+      statusEl.textContent = "失败";
+      statusEl.className = "status error";
+      dl.innerHTML = "";
+    } else if (t.status === "canceled") {
+      meta.textContent = "已取消 · " + fmtSize(t.size);
+      statusEl.textContent = "取消";
+      statusEl.className = "status";
+      dl.innerHTML = "";
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function render() {
+    var seen = {};
+    tasks.forEach(function (t) {
+      seen[t.id] = 1;
+      if (!rowMap[t.id]) buildRow(t);
+      updateRow(t);
+    });
+    Object.keys(rowMap).forEach(function (id) {
+      if (!seen[id]) { rowsEl.removeChild(rowMap[id]); delete rowMap[id]; }
+    });
+    // keep DOM order in sync with task order
+    tasks.forEach(function (t) {
+      if (rowMap[t.id] && rowMap[t.id].parentNode === rowsEl) rowsEl.appendChild(rowMap[t.id]);
+    });
+
+    emptyEl.style.display = tasks.length ? "none" : "block";
+    var anyDone = tasks.some(function (t) { return t.status === "done"; });
+    var anyPending = tasks.some(function (t) { return t.status === "pending" || t.status === "error"; });
+
+    btnStart.disabled = running || !anyPending;
+    btnStop.disabled = !running;
+    btnZip.disabled = !anyDone;
+    btnClear.disabled = running || !tasks.length;
+    summaryText();
+  }
+
+  /* ---------------- engine loading ---------------- */
+
+  function setEngine(text, cls) {
+    engineEl.textContent = text;
+    engineEl.className = cls || "";
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error("无法加载 " + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  // Under file:// the fetch API refuses to read sibling files, but XHR still can.
+  // Detect that case so the page works when double-clicked, not just over http.
+  var IS_FILE_PROTOCOL = (location.protocol === "file:");
+
+  function readViaXHR(url, type) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function () {
+        // file:// XHR reports status 0 on success
+        if (xhr.status === 200 || (xhr.status === 0 && xhr.response)) {
+          resolve(new Blob([xhr.response], { type: type }));
+        } else {
+          reject(new Error("HTTP " + xhr.status));
+        }
+      };
+      xhr.onerror = function () {
+        reject(new Error("无法读取 " + url + "（若直接双击打开，请确认 vendor 文件夹和 index.html 在一起）"));
+      };
+      xhr.send();
+    });
+  }
+
+  // Fetch a core asset from vendor/ first, falling back to the CDN. Blob URLs
+  // keep the core same-origin with the page, which is what file:// needs.
+  function toBlobURL(name, type, onPct) {
+    var local = FFMPEG_BASE + "/" + name;
+    var cdn = FFMPEG_BASE_CDN + "/" + name;
+    var read = function (url) {
+      return IS_FILE_PROTOCOL ? readViaXHR(url, type) : fetchLocal(url, type, onPct);
+    };
+    return read(local).catch(function (e) {
+      setEngine("引擎：本地 " + name + " 读取失败（" + e.message + "），改用 CDN …", "");
+      return read(cdn);
+    }).then(function (b) {
+      return URL.createObjectURL(b);
+    });
+  }
+
+  function fetchLocal(url, type, onPct) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      var total = parseInt(r.headers.get("content-length") || "0", 10);
+      if (!r.body || !r.body.getReader || !total) { return r.blob(); }
+      // stream so a 31MB wasm read shows real progress instead of looking frozen
+      var reader = r.body.getReader();
+      var received = 0;
+      var chunks = [];
+      return (function pump() {
+        return reader.read().then(function (res) {
+          if (res.done) return new Blob(chunks, { type: type });
+          chunks.push(res.value);
+          received += res.value.length;
+          if (onPct) onPct(Math.round(received / total * 100));
+          return pump();
+        });
+      })();
+    });
+  }
+
+  function withTimeout(promise, ms, label) {
+    return Promise.race([
+      promise,
+      new Promise(function (_, rej) {
+        setTimeout(function () { rej(new Error(label + " 超时（" + (ms / 1000) + " 秒无响应）")); }, ms);
+      })
+    ]);
+  }
+
+  function ensureFFmpeg() {
+    if (ffmpegReady) return ffmpegReady;
+    ffmpegReady = (async function () {
+      setEngine("引擎：① 检查 ffmpeg.js …", "");
+      var api = window.FFmpegWASM;
+      if (!api || !api.FFmpeg) {
+        throw new Error("ffmpeg.js 没有加载成功（window.FFmpegWASM 为空）。通常是 CDN 被拦截，请把你浏览器的 F12 → Console/Network 报错发我");
+      }
+
+      var ff = new api.FFmpeg();
+      ff.on("log", function () {});
+
+      setEngine("引擎：② 读取 ffmpeg-core.js …", "");
+      var coreURL = await withTimeout(
+        toBlobURL("ffmpeg-core.js", "text/javascript", function (p) {
+          setEngine("引擎：② 读取 ffmpeg-core.js … " + p + "%", "");
+        }), 60000, "读取 ffmpeg-core.js");
+
+      setEngine("引擎：③ 读取 ffmpeg-core.wasm（约 31MB）…", "");
+      var wasmURL = await withTimeout(
+        toBlobURL("ffmpeg-core.wasm", "application/wasm", function (p) {
+          setEngine("引擎：③ 下载 ffmpeg-core.wasm … " + p + "%", "");
+        }), 300000, "下载 ffmpeg-core.wasm");
+
+      setEngine("引擎：④ 初始化 WebAssembly …", "");
+      await withTimeout(ff.load({ coreURL: coreURL, wasmURL: wasmURL }), 120000, "初始化 WebAssembly");
+
+      ffmpeg = ff;
+      return ff;
+    })();
+    return ffmpegReady;
+  }
+
+  async function decodeToPCM(file, onProgress) {
+    var ff = await ensureFFmpeg();
+    var inName = "in_" + Date.now() + "_" + Math.floor(Math.random() * 1e6) + guessExt(file.name);
+    var outName = inName.replace(/\.[^.]+$/, "") + ".wav";
+
+    var duration = 0;
+    var progressHandler = function (e) {
+      if (e && e.progress && duration > 0) {
+        onProgress(Math.min(0.98, e.progress) * 100);
+      }
+    };
+    ff.on("progress", progressHandler);
+
+    try {
+      await ff.writeFile(inName, new Uint8Array(await file.arrayBuffer()));
+
+      // Measure duration first so we can turn ffmpeg's 0..1 progress into a real bar.
+      try {
+        var probeLog = "";
+        var probe = function (e) { if (e && e.message) probeLog += e.message + "\n"; };
+        ff.on("log", probe);
+        try { await ff.ffprobe(["-v", "error", "-show_entries", "format=duration", "-of", "default=nw=1:nk=1", inName]); } catch (e2) {}
+        ff.off("log", probe);
+        var m = /(\d+(?:\.\d+)?)/.exec(probeLog);
+        if (m) duration = parseFloat(m[1]);
+      } catch (e3) { /* duration unknown: bar stays coarse */ }
+
+      setEnginePhase(null);
+      await ff.exec([
+        "-i", inName,
+        "-vn",
+        "-acodec", "pcm_s16le",
+        "-f", "wav",
+        outName
+      ]);
+
+      var data = await ff.readFile(outName);
+      var bytes = data instanceof Uint8Array ? data : new Uint8Array(data);
+      return parseWav(bytes);
+    } finally {
+      ff.off("progress", progressHandler);
+      try { await ff.deleteFile(inName); } catch (e4) {}
+      try { await ff.deleteFile(outName); } catch (e5) {}
+    }
+  }
+
+  var phaseSetter = null;
+  function setEnginePhase(t) { if (phaseSetter) phaseSetter(t); }
+
+  function guessExt(name) {
+    // ffmpeg picks its demuxer largely from the extension, so keep whatever the
+    // file actually had; only fall back when there is no usable one.
+    var m = /(\.[a-z0-9]{1,5})$/i.exec(name || "");
+    return m ? m[1].toLowerCase() : ".bin";
+  }
+
+  /* ---------------- WAV parsing ---------------- */
+
+  function parseWav(bytes) {
+    var dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    if (dv.getUint32(0, false) !== 0x52494646) throw new Error("解码结果不是有效的 WAV");
+    var pos = 12, fmt = null, dataOff = -1, dataLen = 0;
+    while (pos + 8 <= dv.byteLength) {
+      var id = dv.getUint32(pos, false);
+      var size = dv.getUint32(pos + 4, true);
+      var body = pos + 8;
+      if (id === 0x666d7420) { // "fmt "
+        fmt = {
+          format: dv.getUint16(body, true),
+          channels: dv.getUint16(body + 2, true),
+          sampleRate: dv.getUint32(body + 4, true),
+          bits: dv.getUint16(body + 14, true)
+        };
+      } else if (id === 0x64617461) { // "data"
+        dataOff = body; dataLen = size;
+      }
+      pos = body + size + (size % 2);
+    }
+    if (!fmt || dataOff < 0) {
+      throw new Error("这个文件里没有可用的音频轨道（可能是纯视频或文件损坏）");
+    }
+    if (fmt.format !== 1 || fmt.bits !== 16) throw new Error("解码输出格式异常，无法编码");
+
+    var bytesPerSample = fmt.bits / 8;
+    var frameBytes = bytesPerSample * fmt.channels;
+    // Clamp to what the buffer can actually hold: chunk headers are not always
+    // trustworthy (streamed/truncated WAVs), and reading past the end throws.
+    var available = dv.byteLength - dataOff;
+    var usableBytes = Math.max(0, Math.min(dataLen, available));
+    var frameCount = Math.floor(usableBytes / frameBytes);
+
+    var left = new Int16Array(frameCount);
+    var right = fmt.channels > 1 ? new Int16Array(frameCount) : null;
+    var o = dataOff;
+    if (right) {
+      for (var i = 0; i < frameCount; i++) {
+        left[i] = dv.getInt16(o, true);
+        right[i] = dv.getInt16(o + 2, true);
+        o += 4;
+      }
+    } else {
+      for (var j = 0; j < frameCount; j++) {
+        left[j] = dv.getInt16(o, true);
+        o += 2;
+      }
+    }
+    return { left: left, right: right, sampleRate: fmt.sampleRate, channels: fmt.channels };
+  }
+
+  /* ---------------- resample / channel conversion ---------------- */
+
+  function convertChannels(left, right, target) {
+    if (target === 0) return { left: left, right: right };
+    if (target === 1) {
+      if (!right) return { left: left, right: null };
+      var mono = new Int16Array(left.length);
+      for (var i = 0; i < left.length; i++) mono[i] = (left[i] + right[i]) >> 1;
+      return { left: mono, right: null };
+    }
+    // target === 2
+    if (right) return { left: left, right: right };
+    return { left: left, right: Int16Array.from(left) };
+  }
+
+  function resample(data, from, to) {
+    if (!to || to === from) return data;
+    var ratio = to / from;
+    var outLen = Math.max(1, Math.round(data.length * ratio));
+    var out = new Int16Array(outLen);
+    for (var i = 0; i < outLen; i++) {
+      var src = i / ratio;
+      var i0 = src | 0;
+      var i1 = i0 + 1 < data.length ? i0 + 1 : data.length - 1;
+      var frac = src - i0;
+      out[i] = (data[i0] * (1 - frac) + data[i1] * frac) | 0;
+    }
+    return out;
+  }
+
+  /* ---------------- MP3 encoding ---------------- */
+
+  function encodeMp3(pcm, opts, onProgress) {
+    if (!window.lamejs) throw new Error("lamejs 未加载，无法编码 MP3");
+    var sampleRate = opts.sampleRate;
+    var channels = pcm.right ? 2 : 1;
+    var kbps = opts.bitrate;
+
+    var enc = new window.lamejs.Mp3Encoder(channels, sampleRate, kbps);
+    var left = pcm.left, right = pcm.right;
+    var BLOCK = 1152;
+    var chunks = [];
+    var total = left.length;
+
+    for (var i = 0; i < total; i += BLOCK) {
+      var n = Math.min(BLOCK, total - i);
+      var l = left.subarray(i, i + n);
+      var buf;
+      if (channels === 2) {
+        buf = enc.encodeBuffer(l, right.subarray(i, i + n));
+      } else {
+        buf = enc.encodeBuffer(l);
+      }
+      if (buf.length > 0) chunks.push(new Uint8Array(buf));
+      if ((i / BLOCK) % 40 === 0) {
+        onProgress(Math.min(99, (i / total) * 100));
+        // yield so the UI can repaint during long files
+        if ((i / BLOCK) % 400 === 0) { /* no-op, keep loop tight */ }
+      }
+    }
+    var end = enc.flush();
+    if (end.length > 0) chunks.push(new Uint8Array(end));
+    onProgress(100);
+    return new Blob(chunks, { type: "audio/mpeg" });
+  }
+
+  /* ---------------- pipeline ---------------- */
+
+  async function processTask(t, index) {
+    t.status = "working";
+    t.progress = 0;
+    t.phase = "解码";
+    updateRow(t);
+    renderThrottled();
+
+    phaseSetter = function (p) { if (p) { t.phase = p; updateRow(t); } };
+
+    var bitrate = parseInt($("bitrate").value, 10);
+    var targetRate = parseInt($("rate").value, 10);
+    var targetCh = parseInt($("channels").value, 10);
+
+    // An .mp3 input already holds the target format. Re-encoding would cost a
+    // full generation of quality and minutes of CPU, so hand the bytes through
+    // untouched when the user has not asked to change anything.
+    if (ALREADY_MP3.test(t.srcName) && targetRate === 0 && targetCh === 0) {
+      t.phase = "已是 MP3，直接复制";
+      updateRow(t);
+      t.blob = t.file.slice(0, t.file.size, "audio/mpeg");
+      t.url = URL.createObjectURL(t.blob);
+      t.status = "done";
+      t.progress = 100;
+      t.phase = "";
+      converted.push({ name: t.name, blob: t.blob });
+      updateRow(t);
+      renderThrottled();
+      return;
+    }
+
+    // Decoding a whole file into RAM is the heavy part; report it as 0-60%.
+    var pcm = await decodeToPCM(t.file, function (p) {
+      t.progress = p * 0.6;
+      t.phase = "解码 " + Math.round(p) + "%";
+      updateRow(t);
+    });
+
+    if (cancelFlag) { t.status = "canceled"; updateRow(t); return; }
+
+    var ch = convertChannels(pcm.left, pcm.right, targetCh);
+    var rate = targetRate || pcm.sampleRate;
+    var l = resample(ch.left, pcm.sampleRate, rate);
+    var r = ch.right ? resample(ch.right, pcm.sampleRate, rate) : null;
+
+    t.phase = "编码 " + bitrate + "kbps";
+    updateRow(t);
+
+    var blob = encodeMp3({ left: l, right: r, sampleRate: rate }, { bitrate: bitrate, sampleRate: rate }, function (p) {
+      t.progress = 60 + p * 0.4;
+      updateRow(t);
+    });
+
+    t.blob = blob;
+    t.url = URL.createObjectURL(blob);
+    t.status = "done";
+    t.progress = 100;
+    t.phase = "";
+    converted.push({ name: t.name, blob: blob });
+    updateRow(t);
+    renderThrottled();
+  }
+
+  var renderTimer = null;
+  function renderThrottled() {
+    if (renderTimer) return;
+    renderTimer = setTimeout(function () {
+      renderTimer = null;
+      summaryText();
+    }, 200);
+  }
+
+  async function start() {
+    if (running) return;
+    var queue = tasks.filter(function (t) { return t.status === "pending" || t.status === "error"; });
+    if (!queue.length) return;
+
+    running = true;
+    cancelFlag = false;
+    render();
+
+    try {
+      setEngine("引擎：正在加载 ffmpeg.wasm（首次约 30MB，之后会走缓存）…", "");
+      await ensureFFmpeg();
+      var bits = window.lamejs ? "ffmpeg.wasm + lamejs" : "ffmpeg.wasm";
+      setEngine("引擎：已就绪（" + bits + "），全部转换在本机完成", "ok");
+    } catch (e) {
+      running = false;
+      setEngine("引擎加载失败：" + e.message + " —— 请检查网络后刷新页面重试", "err");
+      render();
+      return;
+    }
+
+    var concurrency = Math.max(1, Math.min(4, parseInt($("concurrency").value, 10) || 1));
+    var cursor = 0;
+
+    // ffmpeg.wasm holds one virtual filesystem per instance, so decode work is
+    // serialized; encoding itself is plain JS and already off the main loop.
+    concurrency = 1;
+
+    var workers = [];
+    for (var w = 0; w < concurrency; w++) {
+      workers.push((async function () {
+        while (cursor < queue.length) {
+          if (cancelFlag) return;
+          var t = queue[cursor++];
+          try {
+            await processTask(t);
+          } catch (e) {
+            t.status = "error";
+            t.error = (e && e.message) ? e.message : "未知错误";
+            t.progress = 100;
+            updateRow(t);
+          }
+        }
+      })());
+    }
+
+    await Promise.all(workers);
+
+    running = false;
+    phaseSetter = null;
+    render();
+    if (cancelFlag) setEngine("引擎：已停止。未完成的文件可以重新点“开始转换”。", "");
+  }
+
+  function stop() {
+    if (!running) return;
+    cancelFlag = true;
+    btnStop.disabled = true;
+  }
+
+  /* ---------------- ZIP ---------------- */
+
+  async function downloadZip() {
+    var list = tasks.filter(function (t) { return t.status === "done" && t.blob; });
+    if (!list.length) return;
+    if (!window.JSZip) {
+      setEngine("ZIP 组件未加载，请改用单个文件的下载链接", "err");
+      return;
+    }
+    btnZip.disabled = true;
+    var old = btnZip.textContent;
+    btnZip.textContent = "打包中…";
+
+    // Disambiguate duplicate output names inside the archive.
+    var used = {};
+    var zip = new window.JSZip();
+    list.forEach(function (t) {
+      var name = t.name;
+      if (used[name]) {
+        used[name]++;
+        name = baseName(t.name) + " (" + used[t.name] + ").mp3";
+      } else {
+        used[t.name] = 1;
+      }
+      zip.file(name, t.blob);
+    });
+
+    var blob = await zip.generateAsync({ type: "blob" }, function (meta) {
+      btnZip.textContent = "打包中 " + Math.round(meta.percent) + "%";
+    });
+
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    var stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = "mp3-" + stamp + ".zip";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+
+    btnZip.textContent = old;
+    btnZip.disabled = false;
+  }
+
+  /* ---------------- events ---------------- */
+
+  drop.addEventListener("click", function () { fileInput.click(); });
+  fileInput.addEventListener("change", function () {
+    if (fileInput.files && fileInput.files.length) addFiles(fileInput.files);
+    fileInput.value = "";
+  });
+
+  ["dragenter", "dragover"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave", "drop"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function (e) {
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length) addFiles(dt.files);
+  });
+  // stop the browser from opening dropped files outside the drop zone
+  window.addEventListener("dragover", function (e) { e.preventDefault(); });
+  window.addEventListener("drop", function (e) { e.preventDefault(); });
+
+  btnStart.addEventListener("click", start);
+  btnStop.addEventListener("click", stop);
+  btnClear.addEventListener("click", clearAll);
+  btnZip.addEventListener("click", downloadZip);
+  $("bitrate").addEventListener("change", checkCompatibility);
+  $("rate").addEventListener("change", checkCompatibility);
+
+  window.addEventListener("beforeunload", function (e) {
+    if (running) { e.preventDefault(); e.returnValue = ""; }
+  });
+
+  render();
+  checkCompatibility();
+
+  // Report which of the four CDN scripts actually made it in.
+  (function checkScripts() {
+    var missing = [];
+    if (typeof window.FFmpegWASM === "undefined") missing.push("ffmpeg.js");
+    if (typeof window.lamejs === "undefined") missing.push("lamejs");
+    if (typeof window.JSZip === "undefined") missing.push("jszip");
+    if (missing.length) {
+      setEngine("依赖加载失败：" + missing.join("、") + " 没下载下来。多半是 CDN(jsdelivr) 被拦截或断网 —— 按 F12 打开 Console 看红色报错。", "err");
+      return;
+    }
+    // Warm the engine up in the background so the first click feels instant.
+    ensureFFmpeg().then(function () {
+      setEngine("引擎：已就绪（ffmpeg.wasm + lamejs），全部转换在本机完成", "ok");
+    }).catch(function (e) {
+      setEngine("引擎预加载失败：" + e.message, "err");
+      ffmpegReady = null; // allow a real retry on the next 开始转换 click
+    });
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# 依赖体积过大，不进版本库，首次启动时自动下载
+vendor/ffmpeg-core.wasm
+
+# 本地工具（不是项目的一部分）
+tools/
+
+# 本地运行产物
+node_modules/
+*.log
+*.tmp
+
+# Windows
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# macOS / 编辑器
+.DS_Store
+.vscode/
+.idea/
+
+# 转换输出
+testin/
+mp3/
+*.mp3
+!vendor/*.mp3
