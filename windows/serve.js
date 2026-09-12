@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const ROOT = __dirname;
+// 本脚本位于 windows/ 子目录，网站根目录是其上一级（index.html 与 vendor/ 所在处）
+const ROOT = path.dirname(__dirname);
 const START_PORT = 8420;
 const MAX_TRIES = 20;
 
@@ -110,8 +111,17 @@ function handler(req, res) {
 }
 
 function openBrowser(url) {
-  // start 在 cmd 里是内置命令；用 cmd /c 包一层保证可执行
-  exec('cmd /c start "" "' + url + '"', () => {});
+  // 各平台打开默认浏览器的命令不同，失败也不影响服务本身
+  var cmd;
+  if (process.platform === 'win32') {
+    // start 是 cmd 内置命令，需用 cmd /c 包一层
+    cmd = 'cmd /c start "" "' + url + '"';
+  } else if (process.platform === 'darwin') {
+    cmd = 'open "' + url + '"';
+  } else {
+    cmd = 'xdg-open "' + url + '"';
+  }
+  exec(cmd, function () {});
 }
 
 let port = START_PORT;

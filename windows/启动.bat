@@ -1,7 +1,8 @@
 @echo off
 chcp 65001 >nul
 title 音频转 MP3
-cd /d "%~dp0"
+rem 本文件位于 windows\ 子目录，网站根目录是其上一级
+cd /d "%~dp0.."
 
 where node >nul 2>nul
 if not errorlevel 1 (
@@ -14,10 +15,8 @@ where python >nul 2>nul && set PY=python
 if "%PY%"=="" ( where py >nul 2>nul && set PY=py )
 
 if not "%PY%"=="" (
-  echo.
-  echo   正在用 Python 启动本地服务 ...
-  start "" http://127.0.0.1:8420/index.html
-  %PY% -m http.server 8420 --bind 127.0.0.1 --directory "%~dp0"
+  rem 用 linux\serve.py：它会自动下载引擎并设置正确的 MIME 类型
+  %PY% "%~dp0..\linux\serve.py"
   goto :eof
 )
 

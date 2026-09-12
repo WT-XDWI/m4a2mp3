@@ -5,23 +5,54 @@
 ## 快速开始
 
 ```bash
-# 1. 克隆
 git clone https://github.com/WT-XDWI/m4a2mp3.git
 cd m4a2mp3
-
-# 2. 启动（需要 Node.js，首次会自动下载 31MB 引擎）
-node serve.js
 ```
 
-浏览器会自动打开页面，把音频文件拖进去即可。
+然后按你的系统选择启动方式：
 
-Windows 用户也可以直接**双击 `启动.bat`**。
+| 系统 | 启动方式 | 依赖 |
+|---|---|---|
+| **Windows** | 双击 `windows\启动.bat` | Node.js 或 Python 3 |
+| **Linux / 树莓派 / Orange Pi** | `python3 linux/serve.py` | Python 3 |
+| 任意系统（有 Node） | `node windows/serve.js` | Node.js |
+
+启动后浏览器会自动打开，把音频文件拖进去即可。
 
 ### 环境要求
 
-- **Node.js**（推荐）或 **Python 3** —— 用于起一个本地 HTTP 服务
+- **Windows**：Node.js 或 Python 3（任选其一）
+- **Linux**：Python 3（系统自带，无需额外安装）
 - 首次运行需联网下载 ffmpeg 引擎（约 31 MB），之后缓存在 `vendor/`，不再联网
 - 浏览器：Chrome / Edge / Firefox 等现代浏览器（需支持 WebAssembly）
+
+### Linux 开机自启
+
+`linux/m4a2mp3.service` 是 systemd 服务模板，改好里面的路径和用户名后：
+
+```bash
+sudo cp linux/m4a2mp3.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now m4a2mp3
+```
+
+服务默认监听 `0.0.0.0:8420`，**局域网内其他设备也能访问**（如 `http://<设备IP>:8420`）。
+
+## 目录结构
+
+```
+m4a2mp3/
+├── index.html              # 网页主程序（两个平台共用）
+├── vendor/                 # 前端依赖（ffmpeg.js / lamejs / jszip）
+├── windows/                # Windows 启动脚本
+│   ├── 启动.bat
+│   └── serve.js
+├── linux/                  # Linux 启动脚本
+│   ├── serve.py
+│   └── m4a2mp3.service     # systemd 服务模板
+├── convert.js              # 命令行批量转换（跨平台，需 Node）
+└── verify.js               # MP3 完整性校验
+```
 
 ## 为什么不能直接双击 index.html
 
