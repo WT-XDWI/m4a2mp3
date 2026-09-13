@@ -163,5 +163,105 @@ function listen() {
   });
 }
 
-// 启动前确认引擎就位，缺了就自动下载
-ensureWasm().then(() => listen());
+// ============================================================
+//  入口：默认启动网页服务；带 --cli 时改为命令行批量转换
+// ============================================================
+
+if (process.argv.indexOf('--cli') >= 0) {
+  runCli();
+} else {
+  // 启动前确认引擎就位，缺了就自动下载
+  ensureWasm().then(() => listen());
+}
+
+// ------------------------------------------------------------
+//  命令行批量转换：node serve.js --cli <输入目录> [码率]
+//  用 ffmpeg.wasm core 直接转码，不需要浏览器
+// ------------------------------------------------------------
+function runCli() {
+  var argv = process.argv.slice(2).filter(function (a) { return a !== '--cli'; });
+  var inDir = argv[0];
+  var bitrate = argv[1] || '192';
+
+  if (!inDir || !fs.existsSync(inDir)) {
+    console.log('用法: node serve.js --cli <输入目录> [码率kbps]');
+    console.log('例如: node serve.js --cli "D:\\\\Music" 192');
+    process.exit(1);
+  }
+
+  var EXTS = ['.m4a', '.m4b', '.m4r', '.aac', '.mp3', '.flac', '.wav', '.aiff', '.aif',
+              '.ogg', '.oga', '.opus', '.wma', '.amr', '.ac3', '.ape', '.wv', '.tta',
+              '.au', '.mp4', '.m4v', '.mov', '.mkv', '.webm', '.avi', '.flv', '.wmv',
+              '.ts', '.mpg', '.mpeg'];
+
+  var files = fs.readdirSync(inDir).filter(function (f) {
+    return EXTS.indexOf(path.extname(f).toLowerCase()) >= 0;
+  }).map(function (f) {
+    var full = path.join(inDir, f);
+    return { name: f, full: full, size: fs.statSync(full).size };
+  });
+
+  if (!files.length) { console.log('没有找到可转换的文件'); return; }
+
+  var outDir = path.join(inDir, 'mp3');
+  fs.mkdirSync(outDir, { recursive: true });
+
+  console.log('找到 ' + files.length + ' 个文件，码率 ' + bitrate + ' kbps');
+  console.log('输出目录: ' + outDir + '\n');
+  console.log('加载 ffmpeg core ...');
+
+  var t0 = Date.now();
+  var core = require(path.join(ROOT, 'vendor', 'ffmpeg-core.js'));
+  core({
+    locateFile: function (f) { return f.endsWith('.wasm') ? WASM_FILE : f; },
+    print: function () {}, printErr: function () {}, noInitialRun: true
+  }).then(function (ff) {
+    console.log('就绪 (' + ((Date.now() - t0) / 1000).toFixed(1) + 's)\n');
+
+    var ok = 0, fail = 0, i = 0;
+
+    (function next() {
+      if (i >= files.length) {
+        console.log('\n完成: 成功 ' + ok + ', 失败 ' + fail);
+        return;
+      }
+      var f = files[i++];
+      var outPath = path.join(outDir, path.basename(f.name, path.extname(f.name)) + '.mp3');
+      var tag = '[' + i + '/' + files.length + '] ' + f.name;
+
+      if (fs.existsSync(outPath)) { console.log(tag + ' -> 已存在，跳过'); ok++; return next(); }
+
+      process.stdout.write(tag + ' (' + (f.size / 1048576).toFixed(1) + 'MB) ... ');
+      var t = Date.now();
+
+      try {
+        var vIn = 'in' + path.extname(f.name).toLowerCase();
+        var vOut = 'out.mp3';
+        ff.FS.writeFile(vIn, new Uint8Array(fs.readFileSync(f.full)));
+
+        // core 的 exec 是可变参数形式，不是数组
+        var rc = ff.exec.apply(ff, ['-hide_banner', '-loglevel', 'error', '-y',
+                                    '-i', vIn, '-vn', '-c:a', 'libmp3lame',
+                                    '-b:a', bitrate + 'k', vOut]);
+        if (rc !== 0) throw new Error('ffmpeg 返回码 ' + rc);
+
+        var data = ff.FS.readFile(vOut);
+        if (!data || !data.length) throw new Error('输出为空');
+        fs.writeFileSync(outPath, Buffer.from(data));
+
+        try { ff.FS.unlink(vIn); } catch (e) {}
+        try { ff.FS.unlink(vOut); } catch (e) {}
+
+        console.log('OK ' + (data.length / 1048576).toFixed(2) + 'MB (' + ((Date.now() - t) / 1000).toFixed(1) + 's)');
+        ok++;
+      } catch (e) {
+        console.log('失败: ' + e.message);
+        fail++;
+      }
+      setImmediate(next);
+    })();
+  }).catch(function (e) {
+    console.error('ffmpeg core 加载失败: ' + e.message);
+    process.exit(1);
+  });
+}

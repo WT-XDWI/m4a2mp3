@@ -10,6 +10,7 @@ m4a2mp3 本地服务（Linux / 树莓派 / Orange Pi 版）
 import http.server
 import socketserver
 import os
+import socket
 import sys
 import urllib.request
 import ssl
@@ -98,7 +99,80 @@ def download_wasm():
     return False
 
 
+def local_ip():
+    """取本机在局域网中的 IP，用于显示访问地址。取不到就退回 127.0.0.1。"""
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # 不会真的发包，只是让内核选出对外网卡
+        s.connect(('8.8.8.8', 80))
+        return s.getsockname()[0]
+    except Exception:
+        return '127.0.0.1'
+    finally:
+        s.close()
+
+
+SERVICE_TEMPLATE = """[Unit]
+Description=m4a2mp3 音频转 MP3 网页服务
+After=network.target
+
+[Service]
+Type=simple
+User={user}
+Group={group}
+WorkingDirectory={root}
+ExecStart={python} -u {script}
+Restart=always
+RestartSec=5
+StandardOutput=append:{root}/serve.log
+StandardError=append:{root}/serve.log
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+
+def install_service():
+    """安装 systemd 服务并开机自启。需要 root。"""
+    import getpass
+    import subprocess
+
+    if os.geteuid() != 0:
+        print('  需要 root 权限，请用: sudo python3 serve.py --install-service')
+        sys.exit(1)
+
+    root = ROOT
+    user = os.environ.get('SUDO_USER') or 'root'
+    script = os.path.abspath(__file__)
+    python = sys.executable or '/usr/bin/python3'
+
+    try:
+        import pwd
+        group = pwd.getpwnam(user).pw_gid
+        group = pwd.getpwuid(group).pw_name
+    except Exception:
+        group = user
+
+    content = SERVICE_TEMPLATE.format(
+        user=user, group=group, root=root, script=script, python=python)
+
+    unit = '/etc/systemd/system/m4a2mp3.service'
+    with open(unit, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+    print('  已写入 ' + unit)
+    subprocess.run(['systemctl', 'daemon-reload'], check=False)
+    subprocess.run(['systemctl', 'enable', '--now', 'm4a2mp3'], check=False)
+    print('  服务已启动并设为开机自启')
+    print('  查看状态: systemctl status m4a2mp3')
+    print('  查看日志: journalctl -u m4a2mp3 -f')
+
+
 def main():
+    if '--install-service' in sys.argv:
+        install_service()
+        return
+
     ok = download_wasm()
 
     class Server(socketserver.ThreadingTCPServer):
@@ -115,17 +189,20 @@ def main():
         print('  端口被占用，无法启动')
         sys.exit(1)
 
+    ip = local_ip()
     print()
     print('  ================================================')
     print('   音频 → MP3 批量转换')
     print('  ================================================')
     print()
     print(f'   本机访问：   http://127.0.0.1:{port}/index.html')
-    print(f'   局域网访问： http://192.168.3.130:{port}/index.html')
+    if ip != '127.0.0.1':
+        print(f'   局域网访问： http://{ip}:{port}/index.html')
     print()
     if not ok:
         print('   [!] 引擎未就绪，页面会提示失败')
     print('   按 Ctrl+C 停止服务')
+    print('   安装为系统服务: sudo python3 serve.py --install-service')
     print()
     try:
         httpd.serve_forever()

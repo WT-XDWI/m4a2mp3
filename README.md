@@ -1,6 +1,6 @@
 # 音频 → MP3 批量转换
 
-纯浏览器本地转换，**文件不会上传到任何服务器**。支持 40+ 种音频/视频格式批量转 MP3。
+纯浏览器本地转换，**文件不会上传到任何服务器**。支持 40+ 种音频/视频格式。
 
 ## 快速开始
 
@@ -9,52 +9,46 @@ git clone https://github.com/WT-XDWI/m4a2mp3.git
 cd m4a2mp3
 ```
 
-然后按你的系统选择启动方式：
+按系统选择启动方式：
 
 | 系统 | 启动方式 | 依赖 |
 |---|---|---|
 | **Windows** | 双击 `windows\启动.bat` | Node.js 或 Python 3 |
-| **Linux / 树莓派 / Orange Pi** | `python3 linux/serve.py` | Python 3 |
-| 任意系统（有 Node） | `node windows/serve.js` | Node.js |
+| **Linux** | `python3 linux/serve.py` | Python 3 |
+| 任意系统 | `node windows/serve.js` | Node.js |
 
-启动后浏览器会自动打开，把音频文件拖进去即可。
+启动后浏览器会自动打开，把文件拖进去即可。
 
-### 环境要求
+首次运行需联网下载 ffmpeg 引擎（约 31 MB），之后缓存在 `vendor/`，不再联网。
 
-- **Windows**：Node.js 或 Python 3（任选其一）
-- **Linux**：Python 3（系统自带，无需额外安装）
-- 首次运行需联网下载 ffmpeg 引擎（约 31 MB），之后缓存在 `vendor/`，不再联网
-- 浏览器：Chrome / Edge / Firefox 等现代浏览器（需支持 WebAssembly）
+## 命令行批量转换
 
-### Linux 开机自启
-
-`linux/m4a2mp3.service` 是 systemd 服务模板，改好里面的路径和用户名后：
+不想开浏览器时，可以直接用命令行转整个目录：
 
 ```bash
-sudo cp linux/m4a2mp3.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now m4a2mp3
+node windows/serve.js --cli "D:\Music" 192
 ```
 
-服务默认监听 `0.0.0.0:8420`，**局域网内其他设备也能访问**（如 `http://<设备IP>:8420`）。
+- 第一个参数是目录，第二个是码率（默认 192）
+- 输出到该目录下的 `mp3/` 子文件夹
+- 已存在的文件会自动跳过，可中断后续跑
 
-## 目录结构
+## Linux 服务部署
 
-```
-m4a2mp3/
-├── index.html              # 网页主程序（两个平台共用）
-├── vendor/                 # 前端依赖（ffmpeg.js / lamejs / jszip）
-├── windows/                # Windows 启动脚本
-│   ├── 启动.bat
-│   └── serve.js
-├── linux/                  # Linux 启动脚本
-│   ├── serve.py
-│   └── m4a2mp3.service     # systemd 服务模板
-├── convert.js              # 命令行批量转换（跨平台，需 Node）
-└── verify.js               # MP3 完整性校验
+安装为 systemd 服务并开机自启（会自动读取当前用户和路径）：
+
+```bash
+sudo python3 linux/serve.py --install-service
 ```
 
-## 为什么不能直接双击 index.html
+服务监听 `0.0.0.0:8420`，**局域网内其他设备也能访问**（启动时会显示实际地址）。
+
+```bash
+systemctl status m4a2mp3     # 查看状态
+journalctl -u m4a2mp3 -f     # 查看日志
+```
+
+## 为什么不能直接打开 index.html
 
 浏览器禁止 `file://` 页面创建 Worker，而 ffmpeg.wasm 必须依赖 Worker。直接打开会报：
 
@@ -84,32 +78,52 @@ Failed to construct 'Worker': Script ... cannot be accessed from origin 'null'
 - 可中途停止，未完成的可以继续
 - 文件名冲突自动去重（`a.m4a` 与 `a.flac` 不会互相覆盖）
 
-## 命令行版本
+## 性能
 
-不想开浏览器时，可以用 Node 直接批量转换：
+解码与编码合并为**一次 ffmpeg 调用**完成。实测（192 kbps）：
 
-```bash
-node convert.js "路径/到/歌曲目录" 192
-```
+| 素材 | 耗时 |
+|---|---|
+| 2 分钟音频 | 约 1.5 秒 |
+| 20 分钟音频 | 约 14 秒 |
 
-输出到该目录下的 `mp3/` 子文件夹。默认 192 kbps。
-
-转换完可以用 `node verify.js` 校验输出文件完整性。
+进度条由 ffmpeg 日志的 `time=` 字段驱动，长文件也能平滑显示。
 
 ## 注意事项
 
 - **MP3 输入会原样复制**，不重新编码，避免二次损失音质。若手动改了采样率或声道则会重新编码。
-- 选 **≤96 kbps 且源是 44.1 kHz** 时，编码器会自动降到 32 kHz（MPEG-1 规范限制），页面会给出提示。
-- 转换在内存中进行，**单个文件越大占用内存越多**。几百 MB 的文件建议用命令行版本。
-- 首次启动需下载约 31 MB 的 ffmpeg 引擎（之后缓存在 `vendor/`，不再联网）。
+- 码率低于 **64 kbps** 时，MP3 格式限制会使其实际以 64 kbps 输出。
+- 采样率低于 **32 kHz** 时会改用 MPEG-2/2.5 编码，实际输出采样率会提升到 32 kHz。
+- 转换在内存中进行，**单个文件越大占用内存越多**。
 
-## 技术栈
+## 目录结构
 
-| 组件 | 用途 | 许可证 |
+```
+m4a2mp3/
+├── index.html            网页主程序（转换逻辑都在这里）
+├── vendor/               前端依赖
+├── windows/
+│   ├── 启动.bat          双击启动
+│   └── serve.js          本地服务 + 命令行模式
+└── linux/
+    └── serve.py          本地服务 + systemd 安装
+```
+
+## 第三方组件
+
+本项目依赖以下组件，**它们不构成本项目许可证所称「软件」的一部分**，不受本项目非商业条款约束：
+
+| 组件 | 许可证 | 说明 |
 |---|---|---|
-| [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | 解码各种格式为 PCM | MIT（封装层）/ GPL-2.0（core） |
-| [lamejs](https://github.com/zhuker/lamejs) | PCM 编码为 MP3 | LGPL-3.0 |
-| [JSZip](https://github.com/Stuk/jszip) | 打包批量下载 | MIT |
+| `@ffmpeg/core` | **GPL-2.0-or-later** | wasm 引擎，运行时从 CDN 下载，本仓库不分发 |
+| `@ffmpeg/ffmpeg` | MIT | 浏览器端封装 |
+| `JSZip` | MIT / GPL-3.0 双许可 | 本项目按 MIT 使用 |
+
+> ⚠️ 若你要将本项目用于**商业目的**，请注意 ffmpeg-core 的 GPL-2.0 不允许叠加更严格的限制。
+> 你需要自行就该组件确认合规方案，本项目的非商业条款**不能凌驾于** GPL 之上。
+>
+> 若你**连同 `ffmpeg-core.wasm` 一起分发给他人**（打包、网盘、预装设备），
+> 你就成为 GPL 意义上的分发者，需提供该组件的完整源码或书面获取方式，且不得附加非商业限制。
 
 ## 许可证
 
@@ -118,18 +132,3 @@ node convert.js "路径/到/歌曲目录" 192
 **简言之**：允许个人学习、教学、学术研究、开源社区等非商业用途；
 **禁止**任何以营利为目的的使用（包括嵌入商业产品、付费服务、AI 模型训练等）。
 商业使用需另行取得授权。
-
-### 第三方组件
-
-本项目依赖的部分组件采用不同的许可证，**不受上述非商业限制的约束**：
-
-| 组件 | 许可证 | 说明 |
-|---|---|---|
-| `@ffmpeg/core` | **GPL-2.0-or-later** | 由 CDN 运行时获取，本仓库不分发 |
-| `lamejs` | **LGPL-3.0** | — |
-| `JSZip` | MIT / GPL-3.0 双许可 | 本项目按 MIT 使用 |
-
-详细清单与分发注意事项见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
-
-> ⚠️ 若你计划将本项目用于**商业目的**，请注意 ffmpeg-core 的 GPL-2.0 许可证不允许叠加更严格的限制，
-> 你需要自行就该组件向权利人确认合规方案。本项目的非商业条款**不能凌驾于** GPL 之上。
