@@ -5,6 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
+// On Windows the console defaults to a legacy codepage; without this the
+// Chinese status lines below turn into mojibake when launched from .bat.
+if (process.platform === 'win32') {
+  try { exec('chcp 65001 >nul', () => {}); } catch (e) {}
+}
+
 // 本脚本位于 windows/ 子目录，网站根目录是其上一级（index.html 与 vendor/ 所在处）
 const ROOT = path.dirname(__dirname);
 const START_PORT = 8420;
@@ -159,5 +165,3 @@ function listen() {
 
 // 启动前确认引擎就位，缺了就自动下载
 ensureWasm().then(() => listen());
-
-listen();

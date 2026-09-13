@@ -1,34 +1,92 @@
 @echo off
-chcp 65001 >nul
-title 音频转 MP3
-rem 本文件位于 windows\ 子目录，网站根目录是其上一级
+chcp 65001 >nul 2>nul
+title Audio to MP3
+setlocal enabledelayedexpansion
+
+rem ============================================================
+rem  Set working directory to the repository root (parent of windows\)
+rem  NOTE: keep this file CRLF-encoded; cmd.exe cannot parse LF-only files.
+rem ============================================================
 cd /d "%~dp0.."
+if errorlevel 1 (
+  echo.
+  echo   [ERROR] Cannot enter directory: %~dp0..
+  echo.
+  pause
+  exit /b 1
+)
 
+set "ROOT=%CD%"
+set "NODECMD="
+set "PYCMD="
+
+rem ---- locate node ----
 where node >nul 2>nul
-if not errorlevel 1 (
-  node "%~dp0serve.js"
-  goto :eof
+if not errorlevel 1 set "NODECMD=node"
+
+rem ---- locate python ----
+if not defined NODECMD (
+  where python >nul 2>nul
+  if not errorlevel 1 set "PYCMD=python"
+)
+if not defined NODECMD if not defined PYCMD (
+  where py >nul 2>nul
+  if not errorlevel 1 set "PYCMD=py"
 )
 
-set PY=
-where python >nul 2>nul && set PY=python
-if "%PY%"=="" ( where py >nul 2>nul && set PY=py )
+rem ---- report ----
+echo.
+echo   ================================================
+echo    Audio -^> MP3  batch converter
+echo   ================================================
+echo.
+echo   Root: "%ROOT%"
+echo.
 
-if not "%PY%"=="" (
-  rem 用 linux\serve.py：它会自动下载引擎并设置正确的 MIME 类型
-  %PY% "%~dp0..\linux\serve.py"
-  goto :eof
+if defined NODECMD (
+  echo   Engine: Node.js  ^(%NODECMD%^)
+  echo.
+  call %NODECMD% "%~dp0serve.js"
+  set "RC=!errorlevel!"
+  if not "!RC!"=="0" (
+    echo.
+    echo   [ERROR] server exited with code !RC!
+    echo   See the messages above.
+    echo.
+    pause
+  )
+  exit /b !RC!
 )
 
+if defined PYCMD (
+  echo   Engine: Python  ^(%PYCMD%^)
+  echo.
+  call %PYCMD% "%~dp0..\linux\serve.py"
+  set "RC=!errorlevel!"
+  if not "!RC!"=="0" (
+    echo.
+    echo   [ERROR] server exited with code !RC!
+    echo   See the messages above.
+    echo.
+    pause
+  )
+  exit /b !RC!
+)
+
+rem ---- nothing found ----
+echo   * Neither Node.js nor Python was found on this system.
 echo.
-echo   [!] 没有找到 Node.js 或 Python
+echo   Why is a local server required?
+echo     Browsers forbid file:// pages from creating Workers,
+echo     and ffmpeg.wasm cannot run without a Worker.
+echo     So opening index.html directly will always fail.
 echo.
-echo   为什么必须用本地服务？
-echo     浏览器禁止 file:// 页面创建 Worker，而 ffmpeg.wasm 必须要 Worker。
-echo     所以直接双击 index.html 一定会失败。
+echo   Install ONE of the following, then run this file again:
 echo.
-echo   请任选其一安装后重新双击本文件：
-echo     Node.js  https://nodejs.org/
-echo     Python   https://www.python.org/downloads/
+echo     Node.js   https://nodejs.org/
+echo     Python    https://www.python.org/downloads/
+echo.
+echo   Note: when installing Python, tick "Add Python to PATH".
 echo.
 pause
+exit /b 1
